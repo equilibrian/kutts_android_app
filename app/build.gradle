@@ -3,24 +3,42 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def versionMajor = 0
+def versionMinor = 1
+def versionPatch = 0
+
 android {
     namespace 'su.th2empty.kutts'
     compileSdk 33
+
+    def developmentStages = [
+            dev: "dev",
+            beta: "beta",
+            production: ""
+    ]
+
+    def currentStage = "dev"
 
     defaultConfig {
         applicationId "su.th2empty.kutts"
         minSdk 26
         targetSdk 33
         versionCode getLatestCommitNumber()
-        versionName getVersionName() //"1.0"
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}" + developmentStages[currentStage]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            applicationVariants.all { variant ->
+                 variant.outputs.all {
+                     outputFileName = "kutts-${variant.versionName}.apk"
+                 }
+            }
         }
     }
     compileOptions {
@@ -35,17 +53,6 @@ android {
 static def getLatestCommitNumber() {
     def process = "git rev-list --count HEAD".execute()
     process.text.trim().toInteger()
-}
-
-def getVersionName() {
-    def versionName = "${project.ext.majorVersion}.${project.ext.minorVersion}.${project.ext.patchVersion}"
-    return versionName
-}
-
-ext {
-    majorVersion = 1
-    minorVersion = 0
-    patchVersion = 0
 }
 
 dependencies {
