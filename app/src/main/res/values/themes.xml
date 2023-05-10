@@ -56,7 +56,10 @@
     <style name="Theme.Button.Icon" parent="Widget.Material3.Button.Icon">
         <item name="android:fontFamily">@font/nunito_semibold</item>
     </style>
-    
+
+    <style name="HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/lato_regular</item>
+    </style>
     <style name="HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
         <item name="fontFamily">@font/lato_regular</item>
     </style>
@@ -64,6 +67,10 @@
         <item name="fontFamily">@font/lato_regular</item>
     </style>
     <style name="TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontWeight">500</item>
+    </style>
+    <style name="TitleSmall" parent="TextAppearance.Material3.TitleSmall">
         <item name="fontFamily">@font/lato_regular</item>
     </style>
     <style name="BodyLarge" parent="TextAppearance.Material3.BodyLarge">

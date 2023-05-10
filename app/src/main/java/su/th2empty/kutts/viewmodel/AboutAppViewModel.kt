@@ -13,6 +13,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import su.th2empty.kutts.BuildConfig
 import su.th2empty.kutts.R
 import timber.log.Timber
 
@@ -28,8 +29,6 @@ class AboutAppViewModel(application: Application) : AndroidViewModel(application
     val deviceName: LiveData<String> = _deviceName
 
     private val resources: Resources = getApplication<Application>().resources
-    private val packageManager: PackageManager = application.packageManager
-    private val packageName: String = application.packageName
 
     init {
         loadVersionInfo()
@@ -47,15 +46,7 @@ class AboutAppViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun getVersionInfo(): Pair<Int, String> {
-        return try {
-            val packageInfo = packageManager.getPackageInfo(packageName, 0)
-            val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toInt()
-            val versionName = packageInfo.versionName
-            Pair(versionCode, versionName)
-        } catch (ex: PackageManager.NameNotFoundException) {
-            Timber.e(ex, "Error getting package info")
-            Pair(0, "")
-        }
+        return Pair(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
     }
 
     fun copyToClipboard() {

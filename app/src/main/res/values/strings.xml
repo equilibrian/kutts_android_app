@@ -33,4 +33,20 @@
     <string name="st_accept">Принять</string>
     <string name="st_decline">Отказаться</string>
     <string name="st_copied">Скопировано</string>
+    <string name="st_title_kutts">Каменск-Уральский Техникум торговли и сервиса</string>
+    <string name="st_kutts_address">г. Каменск-Уральский, ул. Октябрьская, д. 99</string>
+    <string name="st_kutts_phone">8 (3439) 396-122</string>
+    <string name="st_kutts_website">https://kutts.ru</string>
+    <string name="st_kutts_email">kuttc@mail.ru</string>
+    <string name="st_title_working_mode">Режим работы</string>
+    <string name="st_waking_days">Понедельник-пятница: с 8-00 до 16-45</string>
+    <string name="st_saturday_workin_mode">Суббота: с 8-00 до 14-00</string>
+    <string name="st_sunday_workin_mode">Воскресенье: выходной</string>
+    <string name="st_title_contacts">Контакты</string>
+    <string name="st_title_locations">Адреса</string>
+    <string name="st_format_string">%s</string>
+    <string name="st_email_unset">Отсутствует</string>
+    <string name="st_unknown">Неизвестно</string>
+    <string name="st_error_opening_website">Не удалось открыть ссылку</string>
+    <string name="st_map">Карта</string>
 </resources>
