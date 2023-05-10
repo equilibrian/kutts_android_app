@@ -84,14 +84,18 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         smoothScrollContactsRecyclerView()
     }
 
     private fun smoothScrollContactsRecyclerView() {
-        binding.contactsRecycler.postDelayed({
-            binding.contactsRecycler.smoothScrollBy(256, 0)
-            binding.contactsRecycler.postDelayed({
-                binding.contactsRecycler.smoothScrollBy(-256, 0)
+        _binding?.contactsRecycler?.postDelayed({
+            _binding?.contactsRecycler?.smoothScrollBy(256, 0)
+            _binding?.contactsRecycler?.postDelayed({
+                _binding?.contactsRecycler?.smoothScrollBy(-256, 0)
             }, 600)
         }, 1000)
     }

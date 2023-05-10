@@ -29,6 +29,7 @@ class AboutAppActivity : AppCompatActivity() {
 
     private fun setupView() {
         binding = ActivityAboutAppBinding.inflate(layoutInflater)
+        binding.backBtn.setOnClickListener { finish() }
         binding.termsOfUseBtn.setOnClickListener { launchTermsOfUseActivity() }
         binding.copyInfoBtn.setOnClickListener { viewModel.copyToClipboard() }
     }

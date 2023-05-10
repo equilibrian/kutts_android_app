@@ -49,4 +49,12 @@
     <string name="st_unknown">Неизвестно</string>
     <string name="st_error_opening_website">Не удалось открыть ссылку</string>
     <string name="st_map">Карта</string>
+    <string name="st_title_admission_committee">Приемная комиссия</string>
+    <string name="st_string_label">Label</string>
+    <string name="st_educational_programs">Образовательные программы</string>
+    <string name="st_title_entrance_tests">Вступительные испытания</string>
+    <string name="st_targeted_training">Целевое обучение</string>
+    <string name="st_title_monitoring">Мониторинг поданных заявлений</string>
+    <string name="st_title_dormitory_info">Сведения о наличии общежития</string>
+    <string name="st_title_enrollment_orders">Приказы о зачислении</string>
 </resources>

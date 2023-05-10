@@ -4,19 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.DashboardFragment">
+    tools:context=".view.fragments.DashboardFragment"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/screen_headline"
+        style="@style/HeadlineSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/st_title_admission_committee"
+        android:textFontWeight="500"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/admission_committee_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/screen_headline"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <su.th2empty.kutts.view.custom.LayoutButton
+            android:id="@+id/educational_programs_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cornerRadius="12dp"
+            app:iconStart="@drawable/ic_file"
+            app:iconEnd="@drawable/ic_arrow_right"
+            app:text="@string/st_educational_programs"
+            app:backgroundColor="?attr/colorOnPrimary" />
+
+        <su.th2empty.kutts.view.custom.LayoutButton
+            android:id="@+id/entrance_tests_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cornerRadius="12dp"
+            app:iconStart="@drawable/ic_edit"
+            app:iconEnd="@drawable/ic_arrow_right"
+            app:text="@string/st_title_entrance_tests"
+            app:backgroundColor="?attr/colorOnPrimary" />
+
+        <su.th2empty.kutts.view.custom.LayoutButton
+            android:id="@+id/targeted_training_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cornerRadius="12dp"
+            app:iconStart="@drawable/ic_target"
+            app:iconEnd="@drawable/ic_arrow_right"
+            app:text="@string/st_targeted_training"
+            app:backgroundColor="?attr/colorOnPrimary" />
+
+        <su.th2empty.kutts.view.custom.LayoutButton
+            android:id="@+id/monitoring_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cornerRadius="12dp"
+            app:iconStart="@drawable/ic_rating"
+            app:iconEnd="@drawable/ic_arrow_right"
+            app:text="@string/st_title_monitoring"
+            app:backgroundColor="?attr/colorOnPrimary" />
+
+        <su.th2empty.kutts.view.custom.LayoutButton
+            android:id="@+id/dormitory_info_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cornerRadius="12dp"
+            app:iconStart="@drawable/ic_home_outlined"
+            app:iconEnd="@drawable/ic_arrow_right"
+            app:text="@string/st_title_dormitory_info"
+            app:backgroundColor="?attr/colorOnPrimary" />
+
+        <su.th2empty.kutts.view.custom.LayoutButton
+            android:id="@+id/orders_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cornerRadius="12dp"
+            app:iconStart="@drawable/ic_done"
+            app:iconEnd="@drawable/ic_arrow_right"
+            app:text="@string/st_title_enrollment_orders"
+            app:backgroundColor="?attr/colorOnPrimary" />
+    </LinearLayout>
+
+    <su.th2empty.kutts.view.custom.LayoutButton
+        android:id="@+id/about_app_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cornerRadius="12dp"
+        app:iconStart="@drawable/ic_info"
+        app:iconEnd="@drawable/ic_arrow_right"
+        app:text="@string/st_educational_programs"
+        app:backgroundColor="?attr/colorOnPrimary"
+        app:layout_constraintTop_toBottomOf="@id/admission_committee_layout"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
