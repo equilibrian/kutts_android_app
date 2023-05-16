@@ -11,7 +11,6 @@
 package su.th2empty.kutts.repository
 
 import androidx.lifecycle.LiveData
-import su.th2empty.kutts.model.Contact
 import su.th2empty.kutts.model.EducationalProgram
 
 class EducationalProgramsRepository(private val educationalProgramsDao: EducationalProgramsDao) {

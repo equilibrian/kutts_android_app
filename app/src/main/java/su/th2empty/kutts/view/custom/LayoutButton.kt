@@ -106,16 +106,19 @@ class LayoutButton @JvmOverloads constructor(
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_UP) {
-            if (listener != null) listener!!.onClick(this)
+        if (event.action == MotionEvent.ACTION_UP && listener != null) {
+            listener!!.onClick(this)
         }
         return super.dispatchTouchEvent(event)
     }
 
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action == KeyEvent.ACTION_UP && (event.keyCode == KeyEvent.KEYCODE_DPAD_CENTER || event.keyCode == KeyEvent.KEYCODE_ENTER)) {
-            if (listener != null) listener!!.onClick(this)
+        if (listener != null && event.action == KeyEvent.ACTION_UP
+            && (event.keyCode == KeyEvent.KEYCODE_DPAD_CENTER
+                    || event.keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+            listener!!.onClick(this)
         }
         return super.dispatchKeyEvent(event)
     }

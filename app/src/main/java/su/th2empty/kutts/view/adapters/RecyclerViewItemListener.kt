@@ -15,7 +15,30 @@ import su.th2empty.kutts.model.Location
 
 interface RecyclerViewItemListener {
 
-    fun onButtonClick(location: Location) {}
+    /**
+     * Handles the click event on the "Map" button.
+     * @param location the location associated with the "Map" button click
+     */
+    fun onButtonClick(location: Location) {
+        // Empty implementation. This method does not require mandatory
+        // implementation in all RecyclerViews.
+    }
 
-    fun onClick(educationalProgram: EducationalProgram) {}
+    /**
+     * Handles the click event on a RecyclerView child.
+     * This method is empty as it does not require mandatory implementation in all RecyclerViews.
+     */
+    fun onClick() {
+        // Empty implementation. This method does not require mandatory implementation in all RecyclerViews.
+    }
+
+    /**
+     * Handles the click event on a RecyclerView child associated with an educational program.
+     *
+     * @param educationalProgram the educational program associated with the clicked child
+     */
+    fun onClick(educationalProgram: EducationalProgram) {
+        // Implementation varies based on the context where this method is used.
+        // Handles the click event on a RecyclerView child associated with an educational program.
+    }
 }

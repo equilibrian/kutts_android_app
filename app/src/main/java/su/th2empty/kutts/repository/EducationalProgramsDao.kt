@@ -12,10 +12,7 @@ package su.th2empty.kutts.repository
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import su.th2empty.kutts.model.Contact
 import su.th2empty.kutts.model.EducationalProgram
 
 @Dao
