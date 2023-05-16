@@ -1,5 +1,6 @@
 package su.th2empty.kutts.view.fragments
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,7 +14,7 @@ import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.FragmentHomeBinding
 import su.th2empty.kutts.model.Location
 import su.th2empty.kutts.view.adapters.ContactsRecyclerViewAdapter
-import su.th2empty.kutts.view.adapters.LocationsRVItemsListener
+import su.th2empty.kutts.view.adapters.RecyclerViewItemListener
 import su.th2empty.kutts.view.adapters.LocationsRecyclerViewAdapter
 import su.th2empty.kutts.viewmodel.HomeViewModel
 import timber.log.Timber
@@ -23,12 +24,18 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val locationsRVListener = object : LocationsRVItemsListener {
+    private val locationsRVListener = object : RecyclerViewItemListener {
+        @Throws(ActivityNotFoundException::class)
         override fun onButtonClick(location: Location) {
             val address = "${location.index}, ${location.city}, ${location.street}, ${location.houseNumber}"
             val uri = Uri.parse("geo:0,0?q=$address")
             val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
+            try {
+                startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                Timber.wtf(ex)
+                Toast.makeText(activity, getString(R.string.st_error_to_open_map), Toast.LENGTH_LONG).show()
+            }
         }
     }
 

@@ -8,21 +8,23 @@
  *
  */
 
-package su.th2empty.kutts.di
+package su.th2empty.kutts.view.decorations
 
-import dagger.Component
-import su.th2empty.kutts.view.fragments.HomeFragment
-import su.th2empty.kutts.viewmodel.HomeViewModel
-import su.th2empty.kutts.viewmodel.EducationalProgramsViewModel
-import javax.inject.Singleton
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
-@Singleton
-@Component(modules = [AppModule::class])
-interface AppComponent {
+class RecyclerItemDecoration(
+        private val top: Int = 0,
+        private val left: Int = 0,
+        private val right: Int = 0,
+        private val bottom: Int = 0
+    ) : RecyclerView.ItemDecoration() {
 
-    fun inject(homeFragment: HomeFragment)
-
-    fun inject(homeViewModel: HomeViewModel)
-
-    fun injetc(educationalProgramsViewModel: EducationalProgramsViewModel)
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+        outRect.top = top
+        outRect.left = left
+        outRect.right = right
+        outRect.bottom = bottom
+    }
 }

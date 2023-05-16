@@ -8,21 +8,19 @@
  *
  */
 
-package su.th2empty.kutts.di
+package su.th2empty.kutts.utils
 
-import dagger.Component
-import su.th2empty.kutts.view.fragments.HomeFragment
-import su.th2empty.kutts.viewmodel.HomeViewModel
-import su.th2empty.kutts.viewmodel.EducationalProgramsViewModel
-import javax.inject.Singleton
+import android.content.Context
+import android.content.SharedPreferences
 
-@Singleton
-@Component(modules = [AppModule::class])
-interface AppComponent {
+class AppPreferences(context: Context) {
+    private val prefs: SharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
-    fun inject(homeFragment: HomeFragment)
+    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+        return prefs.getBoolean(key, defaultValue)
+    }
 
-    fun inject(homeViewModel: HomeViewModel)
-
-    fun injetc(educationalProgramsViewModel: EducationalProgramsViewModel)
+    fun putBoolean(key: String, value: Boolean) {
+        prefs.edit().putBoolean(key, value).apply()
+    }
 }

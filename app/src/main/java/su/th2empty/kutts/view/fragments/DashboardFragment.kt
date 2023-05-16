@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.FragmentDashboardBinding
 import su.th2empty.kutts.view.AboutAppActivity
+import su.th2empty.kutts.view.EducationalProgramsActivity
 import su.th2empty.kutts.view.custom.LayoutButton
 import su.th2empty.kutts.viewmodel.DashboardViewModel
 
@@ -38,6 +39,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupView() {
+        binding.educationalProgramsButton.setOnClickListener {
+            startActivity(Intent(activity, EducationalProgramsActivity::class.java))
+        }
+
         binding.aboutAppButton.setOnClickListener {
             startActivity(Intent(activity, AboutAppActivity::class.java))
         }

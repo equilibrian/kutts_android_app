@@ -8,21 +8,14 @@
  *
  */
 
-package su.th2empty.kutts.di
+package su.th2empty.kutts.view.adapters
 
-import dagger.Component
-import su.th2empty.kutts.view.fragments.HomeFragment
-import su.th2empty.kutts.viewmodel.HomeViewModel
-import su.th2empty.kutts.viewmodel.EducationalProgramsViewModel
-import javax.inject.Singleton
+import su.th2empty.kutts.model.EducationalProgram
+import su.th2empty.kutts.model.Location
 
-@Singleton
-@Component(modules = [AppModule::class])
-interface AppComponent {
+interface RecyclerViewItemListener {
 
-    fun inject(homeFragment: HomeFragment)
+    fun onButtonClick(location: Location) {}
 
-    fun inject(homeViewModel: HomeViewModel)
-
-    fun injetc(educationalProgramsViewModel: EducationalProgramsViewModel)
+    fun onClick(educationalProgram: EducationalProgram) {}
 }

@@ -14,36 +14,40 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import su.th2empty.kutts.model.Contact
+import su.th2empty.kutts.model.EducationalCategory
+import su.th2empty.kutts.model.EducationalProgram
 import su.th2empty.kutts.model.Location
 
-@Database(entities = [Contact::class, Location::class], version = 1)
+@Database(entities = [
+    Contact::class,
+    Location::class,
+    EducationalProgram::class,
+    EducationalCategory::class], version = 1)
 abstract class KuttsDatabase : RoomDatabase() {
     abstract fun contactsDao(): ContactsDao
 
     abstract fun locationsDao(): LocationsDao
 
+    abstract fun educationalProgramsDao(): EducationalProgramsDao
+
     companion object {
         @Volatile
         private var INSTANCE: KuttsDatabase? = null
 
+
         fun getDatabase(context: Context): KuttsDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
+                INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     KuttsDatabase::class.java,
                     "database.db"
-                ).addCallback(object : Callback() {
-                    override fun onCreate(db: SupportSQLiteDatabase) {
-                        super.onCreate(db)
-                    }
-                }).build()
-                INSTANCE = instance
-                instance
+                ).build().also { INSTANCE = it }
             }
         }
     }

@@ -1,7 +1,8 @@
 package su.th2empty.kutts.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 
-class DocumentsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class DocumentsViewModel(application: Application) : AndroidViewModel(application) {
+
 }

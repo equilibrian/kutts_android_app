@@ -23,7 +23,7 @@ import su.th2empty.kutts.model.Location
 
 class LocationsRecyclerViewAdapter(
     private val locations: List<Location>,
-    private val listener: LocationsRVItemsListener
+    private val listener: RecyclerViewItemListener
     ) : RecyclerView.Adapter<LocationsRecyclerViewAdapter.ViewHolder>() {
 
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

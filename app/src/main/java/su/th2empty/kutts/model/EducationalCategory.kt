@@ -8,10 +8,15 @@
  *
  */
 
-package su.th2empty.kutts.view.adapters
+package su.th2empty.kutts.model
 
-import su.th2empty.kutts.model.Location
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-interface LocationsRVItemsListener {
-    fun onButtonClick(location: Location)
-}
+@Entity(tableName = "educational_categories")
+data class EducationalCategory(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") val id: Long = 0,
+    @ColumnInfo(name = "name") val name: String
+)

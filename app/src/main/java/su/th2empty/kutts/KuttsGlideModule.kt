@@ -8,21 +8,11 @@
  *
  */
 
-package su.th2empty.kutts.di
+package su.th2empty.kutts
 
-import dagger.Component
-import su.th2empty.kutts.view.fragments.HomeFragment
-import su.th2empty.kutts.viewmodel.HomeViewModel
-import su.th2empty.kutts.viewmodel.EducationalProgramsViewModel
-import javax.inject.Singleton
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 
-@Singleton
-@Component(modules = [AppModule::class])
-interface AppComponent {
-
-    fun inject(homeFragment: HomeFragment)
-
-    fun inject(homeViewModel: HomeViewModel)
-
-    fun injetc(educationalProgramsViewModel: EducationalProgramsViewModel)
+@GlideModule
+class KuttsGlideModule : AppGlideModule() {
 }

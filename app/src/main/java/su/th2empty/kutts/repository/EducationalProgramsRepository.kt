@@ -8,21 +8,20 @@
  *
  */
 
-package su.th2empty.kutts.di
+package su.th2empty.kutts.repository
 
-import dagger.Component
-import su.th2empty.kutts.view.fragments.HomeFragment
-import su.th2empty.kutts.viewmodel.HomeViewModel
-import su.th2empty.kutts.viewmodel.EducationalProgramsViewModel
-import javax.inject.Singleton
+import androidx.lifecycle.LiveData
+import su.th2empty.kutts.model.Contact
+import su.th2empty.kutts.model.EducationalProgram
 
-@Singleton
-@Component(modules = [AppModule::class])
-interface AppComponent {
+class EducationalProgramsRepository(private val educationalProgramsDao: EducationalProgramsDao) {
+    val allPrograms: LiveData<List<EducationalProgram>> = educationalProgramsDao.getAllPrograms()
 
-    fun inject(homeFragment: HomeFragment)
+    fun getProgramsByCategory(categoryId: Int): LiveData<List<EducationalProgram>> {
+        return educationalProgramsDao.getProgramsByCategory(categoryId)
+    }
 
-    fun inject(homeViewModel: HomeViewModel)
-
-    fun injetc(educationalProgramsViewModel: EducationalProgramsViewModel)
+    fun getProgramById(id: Int): LiveData<EducationalProgram> {
+        return educationalProgramsDao.getProgramById(id)
+    }
 }

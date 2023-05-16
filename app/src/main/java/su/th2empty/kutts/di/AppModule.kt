@@ -16,10 +16,12 @@ import dagger.Module
 import dagger.Provides
 import su.th2empty.kutts.repository.ContactsDao
 import su.th2empty.kutts.repository.ContactsRepository
+import su.th2empty.kutts.repository.EducationalProgramsRepository
 import su.th2empty.kutts.repository.KuttsDatabase
 import su.th2empty.kutts.repository.LocationsDao
 import su.th2empty.kutts.repository.LocationsRepository
 import su.th2empty.kutts.viewmodel.HomeViewModel
+import su.th2empty.kutts.viewmodel.EducationalProgramsViewModel
 import javax.inject.Singleton
 
 @Module
@@ -61,5 +63,14 @@ class AppModule(private val application: Application) {
         application: Application
     ): HomeViewModel {
         return HomeViewModel(contactsRepository, locationsRepository, application)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProgramsViewModel(
+        programsRepository: EducationalProgramsRepository,
+        application: Application
+    ) : EducationalProgramsViewModel {
+        return EducationalProgramsViewModel(programsRepository, application)
     }
 }

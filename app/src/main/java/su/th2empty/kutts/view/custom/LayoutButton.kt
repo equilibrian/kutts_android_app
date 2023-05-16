@@ -13,6 +13,7 @@ package su.th2empty.kutts.view.custom
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -57,7 +58,14 @@ class LayoutButton @JvmOverloads constructor(
         val text = a.getString(R.styleable.LayoutButton_text)
         val iconEndRes = a.getResourceId(R.styleable.LayoutButton_iconEnd, 0)
         val cornerRadius = a.getDimensionPixelSize(R.styleable.LayoutButton_cornerRadius, dpToPx(12))
-        val backgroundColor = a.getColor(R.styleable.LayoutButton_backgroundColor, ContextCompat.getColor(context, com.google.android.material.R.color.design_default_color_on_primary))
+        val colorSurfaceAttr = com.google.android.material.R.attr.colorBackgroundFloating
+        val outValue = TypedValue()
+        context.theme.resolveAttribute(colorSurfaceAttr, outValue, true)
+        val defaultColor = outValue.data
+        val backgroundColor = a.getColor(
+            R.styleable.LayoutButton_backgroundColor,
+            defaultColor
+        )
 
         // Recycle the typed array
         a.recycle()
