@@ -10,9 +10,11 @@
 
 package su.th2empty.kutts.view
 
-import android.app.Dialog
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +35,6 @@ class EducationalProgramsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEducationalProgramsBinding
 
     private lateinit var educationalProgramsAdapter: ProgramsRecyclerViewAdapter
-    private lateinit var searchView: Dialog
 
     companion object {
         const val DEFAULT_FILTER = 0
@@ -43,6 +44,13 @@ class EducationalProgramsActivity : AppCompatActivity() {
 
     private var currentFilter: Int = DEFAULT_FILTER
     private lateinit var appPreferences: AppPreferences
+    private var shownTooltips: Boolean
+        get() = appPreferences.getBoolean("shownTooltips", false)
+        set(value) = appPreferences.putBoolean("shownTooltips", value)
+
+    private lateinit var searchDialog: AlertDialog
+    private lateinit var searchViewBinding: SearchLayoutBinding
+    private lateinit var searchViewAdapter: SearchEducationalProgramsRVAdapter
 
     private val educationalProgramsViewModel: EducationalProgramsViewModel by lazy {
         ViewModelProvider(this)[EducationalProgramsViewModel::class.java]
@@ -108,6 +116,23 @@ class EducationalProgramsActivity : AppCompatActivity() {
         }
     }
 
+    private val searchQueryListener = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean = false
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            val query = newText?.trim()?.lowercase() ?: ""
+            val filteredEducationalProgramsList = educationalProgramsAdapter.currentList.filter {
+                it.programName.contains(query, true)
+            }
+
+            val searchResult = if (query.isNotEmpty()) filteredEducationalProgramsList else listOf()
+            searchViewAdapter.submitList(searchResult)
+            searchViewBinding.divider.visibility = if (searchResult.isNotEmpty()) View.VISIBLE else View.GONE
+
+            return true
+        }
+    }
+
     /**
      * Sets up the search view in the activity.
      * It inflates a dialog with a search view, sets up a listener for the search view,
@@ -116,79 +141,64 @@ class EducationalProgramsActivity : AppCompatActivity() {
      * bottom sheet content.
      */
     private fun setupSearchView() {
-        searchView = Dialog(this, R.style.Base_Theme_KUTTS)
-        val searchViewBinding = SearchLayoutBinding.inflate(LayoutInflater.from(this), null, false)
-        searchView.setContentView(searchViewBinding.root)
-        searchViewBinding.backButton.setOnClickListener { searchView.dismiss() }
+        searchViewBinding = SearchLayoutBinding.inflate(layoutInflater)
 
-        val searchViewAdapter = SearchEducationalProgramsRVAdapter(object : RecyclerViewItemListener {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setView(searchViewBinding.root)
+        searchDialog = dialogBuilder.create()
+        searchDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        searchViewAdapter = SearchEducationalProgramsRVAdapter(object : RecyclerViewItemListener {
             override fun onClick(educationalProgram: EducationalProgram) {
-                searchView.dismiss()
+                searchDialog.dismiss()
                 educationalProgramsAdapter.updateBottomSheetContent(educationalProgram)
                 educationalProgramsAdapter.bottomSheetDialog.show()
             }
         })
+
+        searchViewBinding.backButton.setOnClickListener { searchDialog.dismiss() }
         searchViewBinding.searchRecyclerView.adapter = searchViewAdapter
-
-        searchViewBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val query = newText?.trim()?.lowercase() ?: ""
-                val filteredEducationalProgramsList = educationalProgramsAdapter.currentList.filter {
-                    it.programName.contains(query, true)
-                }
-
-                searchViewAdapter.let {
-                    if (query.isNotEmpty()) it.submitList(filteredEducationalProgramsList)
-                    else it.submitList(listOf())
-                }
-                return true
-            }
-        })
+        searchViewBinding.searchView.setOnQueryTextListener(searchQueryListener)
     }
 
     private fun setupView() {
         binding.backBtn.setOnClickListener { finish() }
-        binding.fab.setOnClickListener { searchView.show() }
+        binding.fab.setOnClickListener { searchDialog.show() }
+    }
+
+    private fun createTapTarget(view: View, description: String): TapTarget {
+        return TapTarget.forView(view, description)
+            .tintTarget(false)
+            .cancelable(false)
+            .drawShadow(true)
+    }
+
+    private fun addTargetToSequence(sequence: TapTargetSequence, view: View, description: String) {
+        sequence.targets(createTapTarget(view, description))
     }
 
     private fun showTooltips() {
-        appPreferences = AppPreferences(this)
-        if (!appPreferences.getBoolean("has_run_before", false)) {
-            TapTargetSequence(this).targets(
-                TapTarget.forView(
-                    binding.chipFilterAll,
-                    getString(R.string.st_filter_all_description)
-                ).tintTarget(false)
-                    .cancelable(false)
-                    .drawShadow(true),
-                TapTarget.forView(
-                    binding.chipFilterOpop,
-                    getString(R.string.st_filter_opop_description)
-                ).tintTarget(false)
-                    .cancelable(false),
-                TapTarget.forView(
-                    binding.chipFilterOppo,
-                    getString(R.string.st_oppo_filter_description)
-                ).tintTarget(false)
-                    .cancelable(false)
-                    .drawShadow(true),
-                TapTarget.forView(binding.fab, getString(R.string.st_search_description))
-                    .tintTarget(false)
-                    .cancelable(false)
-                    .drawShadow(true)
-            ).start()
-            appPreferences.putBoolean("has_run_before", true)
-        }
+        val sequence = TapTargetSequence(this)
+        addTargetToSequence(sequence, binding.chipFilterAll, getString(R.string.st_filter_all_description))
+        addTargetToSequence(sequence, binding.chipFilterOpop, getString(R.string.st_filter_opop_description))
+        addTargetToSequence(sequence, binding.chipFilterOppo, getString(R.string.st_oppo_filter_description))
+        addTargetToSequence(sequence, binding.fab, getString(R.string.st_search_description))
+        sequence.start()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEducationalProgramsBinding.inflate(layoutInflater)
+
         setupEducationalProgramsRecyclerView()
         setupView()
-        showTooltips()
+
+        appPreferences = AppPreferences(this)
+        if (!shownTooltips) {
+            showTooltips()
+            shownTooltips = true
+        }
+
         setContentView(binding.root)
     }
 }
