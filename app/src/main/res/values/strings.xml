@@ -78,6 +78,25 @@
     <string name="st_title_seats_number_title">Количество мест:</string>
     <string name="st_title_qualification">Присваеваемая квалификация:</string>
     <string name="st_title_program_code">Код специальности:</string>
-    <string name="st_query_hint">Начните искать...</string>
+    <string name="st_query_hint">Начните искать…</string>
     <string name="st_open">Открыть</string>
+    <string name="st_admission_deadlines">Подать заявление на поступление можно с 20.06.%d г. по 15.08.%d г.</string>
+    <string name="st_title_admission">Поступление</string>
+    <string name="st_admission_deadlines2">При наличии свободных мест прием заявлений продлевается до 25.11.%d г.</string>
+    <string name="st_submit_variants">Варианты подачи заявления</string>
+    <string name="st_through_personal_account">Через личный кабинет абитуриента</string>
+    <string name="st_admission_committee">В приемную комиссию</string>
+    <string name="st_postal_operator">Через операторов почтовой связи</string>
+    <string name="st_by_email">Через E-mail</string>
+    <string name="st_forms_docs">Формы заявлений</string>
+    <string name="st_title_required_documents_list">Перечень необходимых документов:</string>
+    <string name="st_admission_submit">Подать заявление</string>
+    <string name="document_statement">Заявление на поступление от имени абитуриента</string>
+    <string name="document_passport">Документ, подтверждающий личность (паспорт)</string>
+    <string name="document_education">Документ об образовании - аттестат и приложение (свидетельство об обучении)</string>
+    <string name="document_photo">Фотографии (3x4 см) - 4 штуки</string>
+    <string name="document_snils">Копия СНИЛС</string>
+    <string name="document_personal_data">Согласие на обработку персональных данных</string>
+    <string name="st_icon">icon</string>
+
 </resources>

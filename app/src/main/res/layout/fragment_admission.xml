@@ -1,13 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.AdmissionFragment">
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="0dp">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/st_title_admission"
+            android:textAppearance="@style/HeadlineSmall"
+            android:paddingTop="16dp"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/admission_deadlines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAppearance="@style/TitleMedium"
+            android:textColor="?attr/colorSecondary"
+            android:text="@string/st_admission_deadlines"
+            app:layout_constraintTop_toBottomOf="@id/header_title"/>
+
+        <TextView
+            android:id="@+id/admission_deadlines2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAppearance="@style/TitleMedium"
+            android:textColor="?attr/colorSecondary"
+            android:text="@string/st_admission_deadlines2"
+            app:layout_constraintTop_toBottomOf="@id/admission_deadlines"/>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            app:cardBackgroundColor="?attr/colorBackgroundFloating">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/admission_deadlines2">
+
+                <TextView
+                    android:id="@+id/submit_variants_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/st_submit_variants"
+                    android:textAppearance="@style/TitleLarge"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <LinearLayout
+                    android:id="@+id/submit_variants_layout"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/submit_variants_title">
+
+                    <su.th2empty.kutts.view.custom.LayoutButton
+                        android:id="@+id/through_personal_account_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:cornerRadius="12dp"
+                        app:iconStart="@drawable/ic_info"
+                        app:iconEnd="@drawable/ic_arrow_right"
+                        app:text="@string/st_through_personal_account"
+                        app:backgroundColor="?attr/colorSurfaceVariant"/>
+
+                    <su.th2empty.kutts.view.custom.LayoutButton
+                        android:id="@+id/admission_committee_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:cornerRadius="12dp"
+                        app:iconStart="@drawable/ic_info"
+                        app:iconEnd="@drawable/ic_arrow_right"
+                        app:text="@string/st_admission_committee"
+                        app:backgroundColor="?attr/colorSurfaceVariant"/>
+
+                    <su.th2empty.kutts.view.custom.LayoutButton
+                        android:id="@+id/by_mail_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:cornerRadius="12dp"
+                        app:iconStart="@drawable/ic_info"
+                        app:iconEnd="@drawable/ic_arrow_right"
+                        app:text="@string/st_postal_operator"
+                        app:backgroundColor="?attr/colorSurfaceVariant"/>
+
+                    <su.th2empty.kutts.view.custom.LayoutButton
+                        android:id="@+id/by_email_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:cornerRadius="12dp"
+                        app:iconStart="@drawable/ic_info"
+                        app:iconEnd="@drawable/ic_arrow_right"
+                        app:text="@string/st_by_email"
+                        app:backgroundColor="?attr/colorSurfaceVariant"/>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

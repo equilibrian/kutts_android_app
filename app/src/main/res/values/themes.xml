@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="Base.Theme.KUTTS" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -59,12 +59,15 @@
 
     <style name="HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
         <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontWeight">500</item>
     </style>
     <style name="HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
         <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontWeight">500</item>
     </style>
     <style name="TitleLarge" parent="TextAppearance.Material3.TitleLarge">
         <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontWeight">500</item>
     </style>
     <style name="TitleMedium" parent="TextAppearance.Material3.TitleMedium">
         <item name="fontFamily">@font/lato_regular</item>
@@ -72,6 +75,7 @@
     </style>
     <style name="TitleSmall" parent="TextAppearance.Material3.TitleSmall">
         <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontWeight">500</item>
     </style>
     <style name="BodyLarge" parent="TextAppearance.Material3.BodyLarge">
         <item name="fontFamily">@font/nunito_regular</item>
@@ -81,5 +85,9 @@
     </style>
     <style name="BodySmall" parent="TextAppearance.Material3.BodySmall">
         <item name="fontFamily">@font/nunito_regular</item>
+    </style>
+
+    <style name="RippleBackgroundStyle">
+        <item name="android:background">?attr/colorControlHighlight</item>
     </style>
 </resources>
