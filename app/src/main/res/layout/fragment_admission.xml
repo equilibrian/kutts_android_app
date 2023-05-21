@@ -52,7 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            app:cardBackgroundColor="?attr/colorBackgroundFloating">
+            app:cardBackgroundColor="?attr/colorBackgroundFloating"
+            app:cardCornerRadius="28dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -82,7 +83,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        app:cornerRadius="12dp"
+                        app:cornerRadius="16dp"
                         app:iconStart="@drawable/ic_info"
                         app:iconEnd="@drawable/ic_arrow_right"
                         app:text="@string/st_through_personal_account"
@@ -93,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        app:cornerRadius="12dp"
+                        app:cornerRadius="16dp"
                         app:iconStart="@drawable/ic_info"
                         app:iconEnd="@drawable/ic_arrow_right"
                         app:text="@string/st_admission_committee"
@@ -104,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        app:cornerRadius="12dp"
+                        app:cornerRadius="16dp"
                         app:iconStart="@drawable/ic_info"
                         app:iconEnd="@drawable/ic_arrow_right"
                         app:text="@string/st_postal_operator"
@@ -115,7 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        app:cornerRadius="12dp"
+                        app:cornerRadius="16dp"
                         app:iconStart="@drawable/ic_info"
                         app:iconEnd="@drawable/ic_arrow_right"
                         app:text="@string/st_by_email"

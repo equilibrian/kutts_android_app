@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:cornerRadius="12dp"
+            app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_file"
             app:iconEnd="@drawable/ic_arrow_right"
             app:text="@string/st_educational_programs"/>
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:cornerRadius="12dp"
+            app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_edit"
             app:iconEnd="@drawable/ic_arrow_right"
             app:text="@string/st_title_entrance_tests" />
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:cornerRadius="12dp"
+            app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_target"
             app:iconEnd="@drawable/ic_arrow_right"
             app:text="@string/st_targeted_training"/>
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:cornerRadius="12dp"
+            app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_rating"
             app:iconEnd="@drawable/ic_arrow_right"
             app:text="@string/st_title_monitoring"/>
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:cornerRadius="12dp"
+            app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_home_outlined"
             app:iconEnd="@drawable/ic_arrow_right"
             app:text="@string/st_title_dormitory_info"/>
@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:cornerRadius="12dp"
+            app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_done"
             app:iconEnd="@drawable/ic_arrow_right"
             app:text="@string/st_title_enrollment_orders"/>
@@ -92,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:cornerRadius="12dp"
+        app:cornerRadius="16dp"
         app:iconStart="@drawable/ic_info"
         app:iconEnd="@drawable/ic_arrow_right"
         app:text="@string/st_title_about_app"

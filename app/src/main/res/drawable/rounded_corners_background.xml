@@ -8,13 +8,7 @@
   ~
   -->
 
-<resources>
-    <declare-styleable name="LayoutButton">
-        <attr name="iconStart" format="reference" />
-        <attr name="text" format="string" />
-        <attr name="iconEnd" format="reference" />
-        <attr name="cornerRadius" format="dimension" />
-        <attr name="backgroundColor" format="color"/>
-    </declare-styleable>
-    <attr name="colorCardBackground" format="reference|color"/>
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="?attr/colorCardBackground"/>
+    <corners android:radius="28dp"/>
+</shape>
