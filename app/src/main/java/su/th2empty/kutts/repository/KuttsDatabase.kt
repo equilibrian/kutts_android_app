@@ -14,33 +14,48 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import su.th2empty.kutts.model.Contact
 import su.th2empty.kutts.model.EducationalCategory
 import su.th2empty.kutts.model.EducationalProgram
 import su.th2empty.kutts.model.Location
 
+/**
+ * The Room database for the application.
+ */
 @Database(entities = [
     Contact::class,
     Location::class,
     EducationalProgram::class,
     EducationalCategory::class], version = 1)
 abstract class KuttsDatabase : RoomDatabase() {
+
+    /**
+     * Returns the Data Access Object (DAO) for contacts.
+     * @return ContactsDao object.
+     */
     abstract fun contactsDao(): ContactsDao
 
+    /**
+     * Returns the Data Access Object (DAO) for locations.
+     * @return LocationsDao object.
+     */
     abstract fun locationsDao(): LocationsDao
 
+    /**
+     * Returns the Data Access Object (DAO) for educational programs.
+     * @return EducationalProgramsDao object.
+     */
     abstract fun educationalProgramsDao(): EducationalProgramsDao
 
     companion object {
         @Volatile
         private var INSTANCE: KuttsDatabase? = null
 
-
+        /**
+         * Returns an instance of the KuttsDatabase.
+         * @param context The application context.
+         * @return KuttsDatabase instance.
+         */
         fun getDatabase(context: Context): KuttsDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(

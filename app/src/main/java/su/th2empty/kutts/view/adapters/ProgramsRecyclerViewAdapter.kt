@@ -101,9 +101,7 @@ class ProgramsRecyclerViewAdapter : ListAdapter<EducationalProgram, ProgramsRecy
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        itemDecoration = RecyclerItemDecoration(
-            bottom = recyclerView.context.resources.getDimensionPixelOffset(R.dimen.vertical_space)
-        )
+        itemDecoration = RecyclerItemDecoration(bottom = recyclerView.context.resources.getDimensionPixelOffset(R.dimen.vertical_space))
 
         if (recyclerView.itemDecorationCount == 0)
             recyclerView.addItemDecoration(itemDecoration)

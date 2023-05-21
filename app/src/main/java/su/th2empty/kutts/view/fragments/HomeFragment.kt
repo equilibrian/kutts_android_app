@@ -58,6 +58,15 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    /**
+     * Sets up the click listener for the website link.
+     * When clicked, opens the website URL in a web browser.
+     * If an error occurs while opening the website, logs the error using Timber
+     * and displays a toast message to notify the user about the error.
+     *
+     * @throws Exception if an error occurs while opening the website URL.
+     */
+    @Throws(Exception::class)
     private fun setupWebsiteClickListener() {
         binding.website.setOnClickListener {
             try {
@@ -73,8 +82,6 @@ class HomeFragment : Fragment() {
 
     private fun setupContactsRecyclerView() {
         homeViewModel.allContacts.observe(viewLifecycleOwner) { contacts ->
-            val contactsDecoration = ContactsRecyclerViewAdapter.ItemDecoration(8f)
-            binding.contactsRecycler.addItemDecoration(contactsDecoration)
             val contactsRecyclerViewAdapter = ContactsRecyclerViewAdapter(contacts)
             binding.contactsRecycler.adapter = contactsRecyclerViewAdapter
         }
@@ -82,15 +89,9 @@ class HomeFragment : Fragment() {
 
     private fun setupLocationsRecyclerView() {
         homeViewModel.allLocations.observe(viewLifecycleOwner) { locations ->
-            val locationsDecoration = LocationsRecyclerViewAdapter.ItemDecoration(8f)
-            binding.locationsRecycler.addItemDecoration(locationsDecoration)
             val locationsRecyclerViewAdapter = LocationsRecyclerViewAdapter(locations, locationsRVListener)
             binding.locationsRecycler.adapter = locationsRecyclerViewAdapter
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,6 +99,12 @@ class HomeFragment : Fragment() {
         smoothScrollContactsRecyclerView()
     }
 
+    /**
+     * Performs a smooth scroll animation on the contacts RecyclerView.
+     * Scrolls the RecyclerView by a distance of 256 pixels to the right,
+     * then scrolls it back by the same distance after a delay of 600 milliseconds.
+     * The scrolling animation starts after a delay of 1000 milliseconds.
+     */
     private fun smoothScrollContactsRecyclerView() {
         _binding?.contactsRecycler?.postDelayed({
             _binding?.contactsRecycler?.smoothScrollBy(256, 0)

@@ -11,41 +11,26 @@
 package su.th2empty.kutts.view.adapters
 
 import android.content.Context
-import android.graphics.Rect
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import su.th2empty.kutts.R
 import su.th2empty.kutts.model.Contact
+import su.th2empty.kutts.view.decorations.RecyclerItemDecoration
 
 class ContactsRecyclerViewAdapter(private val contacts: List<Contact>)
     : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
+
+    private lateinit var itemDecoration: RecyclerItemDecoration
 
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val jobTitle: TextView = v.findViewById(R.id.title_job)
         val contactName: TextView = v.findViewById(R.id.contact_name)
         val contactPhone: TextView = v.findViewById(R.id.contact_phone)
         val contactEmail: TextView = v.findViewById(R.id.contact_email)
-    }
-
-    /**
-     * Contacts items decoration
-     * @param horizontalSpace Horizontal padding in dp
-     */
-    class ItemDecoration(private val horizontalSpace: Float) : RecyclerView.ItemDecoration() {
-
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            val horizontalSpaceInPx = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                horizontalSpace,
-                view.resources.displayMetrics
-            ).toInt()
-
-            outRect.right = horizontalSpaceInPx
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -79,5 +64,21 @@ class ContactsRecyclerViewAdapter(private val contacts: List<Contact>)
         holder.contactName.text = getContactName(holder.itemView.context, contact)
         holder.contactPhone.text = contact.phoneNumber
         holder.contactEmail.text = getContactEmail(holder.itemView.context, contact)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        itemDecoration = RecyclerItemDecoration(right = recyclerView.context.resources.getDimensionPixelOffset(R.dimen.vertical_space))
+
+        if (recyclerView.itemDecorationCount == 0)
+            recyclerView.addItemDecoration(itemDecoration)
+
+        recyclerView.itemAnimator = DefaultItemAnimator()
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        if (recyclerView.itemDecorationCount != 0)
+            recyclerView.removeItemDecoration(itemDecoration)
     }
 }

@@ -10,43 +10,28 @@
 
 package su.th2empty.kutts.view.adapters
 
-import android.graphics.Rect
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import su.th2empty.kutts.R
 import su.th2empty.kutts.model.Location
+import su.th2empty.kutts.view.decorations.RecyclerItemDecoration
 
 class LocationsRecyclerViewAdapter(
     private val locations: List<Location>,
     private val listener: RecyclerViewItemListener
     ) : RecyclerView.Adapter<LocationsRecyclerViewAdapter.ViewHolder>() {
 
+    private lateinit var itemDecoration: RecyclerItemDecoration
+
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val title: TextView = v.findViewById(R.id.title_street_and_house)
         val body: TextView = v.findViewById(R.id.body_city)
         val openMapButton: Button = v.findViewById(R.id.open_map_btn)
-    }
-
-    /**
-     * Location items decoration
-     * @param bottomSpace Bottom padding in dp
-     */
-    class ItemDecoration(private val bottomSpace: Float) : RecyclerView.ItemDecoration() {
-
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            val horizontalSpaceInPx = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                bottomSpace,
-                view.resources.displayMetrics
-            ).toInt()
-
-            outRect.bottom = horizontalSpaceInPx
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -66,5 +51,21 @@ class LocationsRecyclerViewAdapter(
         holder.openMapButton.setOnClickListener {
             listener.onButtonClick(location)
         }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        itemDecoration = RecyclerItemDecoration(bottom = recyclerView.context.resources.getDimensionPixelOffset(R.dimen.vertical_space))
+
+        if (recyclerView.itemDecorationCount == 0)
+            recyclerView.addItemDecoration(itemDecoration)
+
+        recyclerView.itemAnimator = DefaultItemAnimator()
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        if (recyclerView.itemDecorationCount != 0)
+            recyclerView.removeItemDecoration(itemDecoration)
     }
 }

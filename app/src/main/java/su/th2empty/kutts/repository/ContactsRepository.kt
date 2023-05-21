@@ -13,6 +13,6 @@ package su.th2empty.kutts.repository
 import androidx.lifecycle.LiveData
 import su.th2empty.kutts.model.Contact
 
-class ContactsRepository(private val contactsDao: ContactsDao) {
+class ContactsRepository(contactsDao: ContactsDao) {
     val allContacts: LiveData<List<Contact>> = contactsDao.getAllContacts()
 }

@@ -14,6 +14,23 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Represents an educational program.
+ *
+ * @property id The unique identifier of the program.
+ * @property programCode The code of the program.
+ * @property programName The name of the program.
+ * @property basicEducation The level of basic education required for the program.
+ * @property trainingPeriod The duration of the training program.
+ * @property trainingForm The form of training.
+ * @property seatsNumber The number of available seats.
+ * @property qualification The qualification obtained after completing the program.
+ * @property categoryId The ID of the category to which the program belongs.
+ * @property isCommercial Indicates whether the program is commercial (1) or not (0).
+ * @property description The description of the program.
+ * @property img The image associated with the program.
+ * @property fundingSource The source of funding for the program.
+ */
 @Entity(tableName = "educational_programs")
 data class EducationalProgram(
     @PrimaryKey(autoGenerate = true)

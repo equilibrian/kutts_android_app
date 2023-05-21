@@ -2,8 +2,10 @@ package su.th2empty.kutts.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.ActivityAboutAppBinding
 import su.th2empty.kutts.viewmodel.AboutAppViewModel
 
@@ -45,6 +47,17 @@ class AboutAppActivity : AppCompatActivity() {
 
         viewModel.deviceName.observe(this) { deviceName ->
             binding.deviceName.text = deviceName
+        }
+
+        viewModel.showCopiedMessage.observe(this) { showCopied ->
+            if (showCopied) {
+                Toast.makeText(
+                    binding.root.context,
+                    resources.getString(R.string.st_copied),
+                    Toast.LENGTH_LONG
+                ).show()
+                viewModel.showCopiedMessage.value = false
+            }
         }
     }
 

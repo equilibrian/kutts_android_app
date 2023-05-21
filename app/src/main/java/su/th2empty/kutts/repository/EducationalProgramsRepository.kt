@@ -13,14 +13,15 @@ package su.th2empty.kutts.repository
 import androidx.lifecycle.LiveData
 import su.th2empty.kutts.model.EducationalProgram
 
+/**
+ * Repository class for accessing educational programs data.
+ * @param educationalProgramsDao The Data Access Object (DAO) for educational programs.
+ */
 class EducationalProgramsRepository(private val educationalProgramsDao: EducationalProgramsDao) {
+
+    /**
+     * Retrieves all educational programs.
+     * @return LiveData object containing a list of all educational programs.
+     */
     val allPrograms: LiveData<List<EducationalProgram>> = educationalProgramsDao.getAllPrograms()
-
-    fun getProgramsByCategory(categoryId: Int): LiveData<List<EducationalProgram>> {
-        return educationalProgramsDao.getProgramsByCategory(categoryId)
-    }
-
-    fun getProgramById(id: Int): LiveData<EducationalProgram> {
-        return educationalProgramsDao.getProgramById(id)
-    }
 }

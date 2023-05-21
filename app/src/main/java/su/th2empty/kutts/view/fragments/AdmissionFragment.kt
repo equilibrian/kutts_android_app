@@ -1,5 +1,7 @@
 package su.th2empty.kutts.view.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,10 @@ class AdmissionFragment : Fragment() {
 
     private var bottomSheetDialog: BottomSheetDialog? = null
     private lateinit var bottomSheetBinding: AdmissionBottomSheetBinding
+
+    companion object {
+        const val PERSONAL_CABINET_URI = "https://priem.egov66.ru"
+    }
 
     /*private val admissionViewModel by lazy {
         ViewModelProvider(this)[AdmissionViewModel::class.java]
@@ -69,8 +75,14 @@ class AdmissionFragment : Fragment() {
         bottomSheetDialog?.setContentView(bottomSheetBinding.root)
     }
 
+    /**
+     * Updates the content of the bottom sheet with the given admission variant.
+     * @param variant The admission variant containing the information to update the bottom sheet.
+     */
     private fun updateBottomSheetContent(variant: AdmissionVariant) {
         bottomSheetBinding.title.text = getString(variant.titleResId)
+
+        // Build the string representation of the required documents
         val documents = buildString {
             variant.requiredDocuments.forEachIndexed { index, admissionDocument ->
                 append("${index + 1}. ")
@@ -78,8 +90,15 @@ class AdmissionFragment : Fragment() {
                 append('\n')
             }
         }
+
         bottomSheetBinding.textContent.text = documents.trim()
-        bottomSheetBinding.submitButton.visibility =
-            if (variant.submitButtonEnabled) View.VISIBLE else View.GONE
+
+        // Configure the submit button
+        bottomSheetBinding.submitButton.apply {
+            visibility = if (variant.submitButtonEnabled) View.VISIBLE else View.GONE
+            setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PERSONAL_CABINET_URI)))
+            }
+        }
     }
 }

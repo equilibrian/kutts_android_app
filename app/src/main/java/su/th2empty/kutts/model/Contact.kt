@@ -14,6 +14,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Represents a contact.
+ *
+ * @property id The unique identifier of the contact.
+ * @property jobTitle The job title of the contact.
+ * @property name The name of the contact (can be null).
+ * @property phoneNumber The phone number of the contact.
+ * @property email The email address of the contact (can be null).
+ */
 @Entity(tableName = "contacts")
 data class Contact(
     @PrimaryKey(autoGenerate = true)

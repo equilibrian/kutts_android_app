@@ -14,6 +14,13 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Item decoration for RecyclerView to add spacing around each item.
+ * @param top    The top spacing in pixels.
+ * @param left   The left spacing in pixels.
+ * @param right  The right spacing in pixels.
+ * @param bottom The bottom spacing in pixels.
+ */
 class RecyclerItemDecoration(
         private val top: Int = 0,
         private val left: Int = 0,
@@ -21,6 +28,13 @@ class RecyclerItemDecoration(
         private val bottom: Int = 0
     ) : RecyclerView.ItemDecoration() {
 
+    /**
+     * Adds item offsets to provide spacing around each item in the RecyclerView.
+     * @param outRect The Rect object to receive the item offsets.
+     * @param view    The child view being decorated.
+     * @param parent  The RecyclerView.
+     * @param state   The current state of RecyclerView.
+     */
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         outRect.top = top
         outRect.left = left

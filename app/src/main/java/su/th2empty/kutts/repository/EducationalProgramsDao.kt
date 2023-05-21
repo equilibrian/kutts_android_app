@@ -15,14 +15,15 @@ import androidx.room.Dao
 import androidx.room.Query
 import su.th2empty.kutts.model.EducationalProgram
 
+/**
+ * Data Access Object (DAO) for accessing educational programs.
+ */
 @Dao
 interface EducationalProgramsDao {
+    /**
+     * Retrieves all educational programs.
+     * @return LiveData object containing a list of all educational programs.
+     */
     @Query("SELECT * FROM educational_programs")
     fun getAllPrograms(): LiveData<List<EducationalProgram>>
-
-    @Query("SELECT * FROM educational_programs WHERE id = :id")
-    fun getProgramById(id: Int): LiveData<EducationalProgram>
-
-    @Query("SELECT * FROM educational_programs INNER JOIN educational_categories ON :id = educational_categories.id ORDER BY educational_categories.name")
-    fun getProgramsByCategory(id: Int): LiveData<List<EducationalProgram>>
 }

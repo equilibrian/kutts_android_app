@@ -6,7 +6,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.res.Resources
 import android.os.Build
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import su.th2empty.kutts.BuildConfig
@@ -17,14 +16,20 @@ class AboutAppViewModel(application: Application) : AndroidViewModel(application
     val applicationVersionValue = MutableLiveData<String>()
     val osVersionValue = MutableLiveData<String>()
     val deviceName = MutableLiveData<String>()
-    val resources: Resources = getApplication<Application>().resources
+    private val resources: Resources = application.resources
+    val showCopiedMessage = MutableLiveData<Boolean>()
 
     init {
         loadVersionInfo()
     }
 
+    /**
+     * Loads the version information of the application, operating system, and device.
+     * Updates the corresponding LiveData objects with the formatted version information.
+     */
     private fun loadVersionInfo() {
         val (versionCode, versionName) = getVersionInfo()
+
         applicationVersionValue.value =
             resources.getString(R.string.st_format_application_version)
                 .format("$versionName ($versionCode)")
@@ -37,28 +42,22 @@ class AboutAppViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun getVersionInfo(): Pair<Int, String> {
-        return Pair(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+        return BuildConfig.VERSION_CODE to BuildConfig.VERSION_NAME
     }
 
     fun copyToClipboard() {
-        copyTextToClipboard(buildAboutText())
+        val aboutText = getAboutText()
+        copyTextToClipboard(aboutText)
+        showCopiedMessage.value = true
     }
 
-    private fun buildAboutText(): String {
+    private fun getAboutText(): String {
         return "${applicationVersionValue.value}\n${osVersionValue.value}\n${deviceName.value}"
     }
 
     private fun copyTextToClipboard(text: String) {
-        val clipboard: ClipboardManager? =
-            getApplication<Application>().getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-        val clip: ClipData = ClipData.newPlainText("label", text)
-        clipboard?.let {
-            it.setPrimaryClip(clip)
-            Toast.makeText(
-                getApplication(),
-                resources.getString(R.string.st_copied),
-                Toast.LENGTH_LONG
-            ).show()
-        }
+        val clipboardManager = getApplication<Application>().getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+        val clipData = ClipData.newPlainText("label", text)
+        clipboardManager?.setPrimaryClip(clipData)
     }
 }

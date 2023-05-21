@@ -14,6 +14,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Represents a location.
+ *
+ * @property id The unique identifier of the location.
+ * @property index The postal index of the location.
+ * @property city The city where the educational institution is located.
+ * @property street The street where the educational institution building is located.
+ * @property houseNumber The house number where the educational institution building is located.
+ */
 @Entity(tableName = "locations")
 data class Location(
     @PrimaryKey(autoGenerate = true)

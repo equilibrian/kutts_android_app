@@ -15,8 +15,16 @@ import androidx.room.Dao
 import androidx.room.Query
 import su.th2empty.kutts.model.Location
 
+/**
+ * Data Access Object (DAO) for locations.
+ */
 @Dao
 interface LocationsDao {
+
+    /**
+     * Retrieves all locations from the database.
+     * @return LiveData object containing a list of locations.
+     */
     @Query("SELECT * FROM locations")
     fun getAllLocations(): LiveData<List<Location>>
 }
