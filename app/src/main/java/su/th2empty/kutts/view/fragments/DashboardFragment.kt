@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import su.th2empty.kutts.databinding.FragmentDashboardBinding
 import su.th2empty.kutts.view.AboutAppActivity
 import su.th2empty.kutts.view.EducationalProgramsActivity
+import su.th2empty.kutts.view.EntranceTestsActivity
+import su.th2empty.kutts.view.TargetedTrainingActivity
 
 class DashboardFragment : Fragment() {
 
@@ -35,6 +37,14 @@ class DashboardFragment : Fragment() {
 
         binding.aboutAppButton.setOnClickListener {
             startActivity(Intent(activity, AboutAppActivity::class.java))
+        }
+
+        binding.entranceTestsButton.setOnClickListener {
+            startActivity(Intent(activity, EntranceTestsActivity::class.java))
+        }
+
+        binding.targetedTrainingButton.setOnClickListener {
+            startActivity(Intent(activity, TargetedTrainingActivity::class.java))
         }
     }
 

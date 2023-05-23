@@ -102,5 +102,6 @@
     <string name="st_error">Ошибка</string>
     <string name="st_retry">Повторить попытку</string>
     <string name="st_title_documentation">Документация</string>
+    <string name="st_title_targeted_training">Целевое обучение</string>
 
 </resources>

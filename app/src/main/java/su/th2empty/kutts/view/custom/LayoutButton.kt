@@ -161,7 +161,7 @@ class LayoutButton @JvmOverloads constructor(
         }
     }
 
-    fun setBackground(resId: Int) {
+    override fun setBackgroundColor(resId: Int) {
         background.setColor(resId)
     }
 

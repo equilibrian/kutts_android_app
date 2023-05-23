@@ -1,48 +1,55 @@
-package su.th2empty.kutts.view.fragments
+/*
+ * Copyright (c) 2023 Denis <Equilibrian> Novikov
+ *
+ * This file is part of KUTTS.
+ * KUTTS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3, as published by the Free Software Foundation.
+ * KUTTS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License version 3 for more details.
+ * You should have received a copy of the GNU General Public License version 3 along with KUTTS. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
+ *
+ */
+
+package su.th2empty.kutts.view
 
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import su.th2empty.kutts.R
-import su.th2empty.kutts.databinding.FragmentDocumentsBinding
+import su.th2empty.kutts.databinding.ActivityEntranceTestsBinding
 import su.th2empty.kutts.model.PdfDocument
 import su.th2empty.kutts.view.custom.LayoutButton
-import su.th2empty.kutts.viewmodel.DocumentsViewModel
+import su.th2empty.kutts.viewmodel.EntranceTestsViewModel
 
-class DocumentsFragment : Fragment() {
-    private var _binding: FragmentDocumentsBinding? = null
-    private val binding get() = _binding!!
+class EntranceTestsActivity : AppCompatActivity() {
 
-    private val documentsViewModel by lazy {
-        ViewModelProvider(this)[DocumentsViewModel::class.java]
+    private lateinit var binding: ActivityEntranceTestsBinding
+
+    private val viewModel by lazy {
+        ViewModelProvider(this)[EntranceTestsViewModel::class.java]
     }
 
     private fun observePdfDocuments() {
-        documentsViewModel.pdfDocuments.observe(viewLifecycleOwner) { documents ->
+        viewModel.pdfDocuments.observe(this) { documents ->
             if (documents.isNotEmpty()) {
                 displayPdfDocuments(documents)
                 binding.nothingToShowLayout.visibility = View.GONE
-                binding.contentLayout.visibility = View.VISIBLE
             }
         }
     }
 
     private fun displayPdfDocuments(documents: List<PdfDocument>) {
         binding.documentsLayout.removeAllViews()
-        documents.forEach { document ->
-            val button = createPdfButton(document)
+        documents.forEachIndexed { idx, document ->
+            val button = createPdfButton(document, idx)
             binding.documentsLayout.addView(button)
         }
     }
 
-    private fun createPdfButton(document: PdfDocument): LayoutButton {
+    private fun createPdfButton(document: PdfDocument, position: Int): LayoutButton {
         val documentLayoutParams = ConstraintLayout.LayoutParams(
             ConstraintLayout.LayoutParams.MATCH_PARENT,
             ConstraintLayout.LayoutParams.WRAP_CONTENT
@@ -62,7 +69,7 @@ class DocumentsFragment : Fragment() {
             setIconEnd(R.drawable.ic_arrow_right)
             setBackgroundColor(outValue.data)
             layoutParams = documentLayoutParams
-            setMarginTop(8)
+            if (position != 0) setMarginTop(8)
             setOnClickListener {
                 openPdfDocument(document.url)
             }
@@ -76,20 +83,18 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun setupView() {
+        binding.backBtn.setOnClickListener { finish() }
+
         observePdfDocuments()
-        documentsViewModel.fetchPdfDocuments()
+        viewModel.fetchPdfDocuments()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDocumentsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityEntranceTestsBinding.inflate(layoutInflater)
 
         setupView()
 
-        return root
+        setContentView(binding.root)
     }
 }
