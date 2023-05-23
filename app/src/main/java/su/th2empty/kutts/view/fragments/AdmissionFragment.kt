@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.AdmissionBottomSheetBinding
 import su.th2empty.kutts.databinding.FragmentAdmissionBinding
 import su.th2empty.kutts.model.AdmissionVariant
+import su.th2empty.kutts.model.PdfDocument
+import su.th2empty.kutts.view.custom.LayoutButton
+import su.th2empty.kutts.viewmodel.AdmissionViewModel
 import java.time.LocalDate
 
 class AdmissionFragment : Fragment() {
@@ -25,9 +29,9 @@ class AdmissionFragment : Fragment() {
         const val PERSONAL_CABINET_URI = "https://priem.egov66.ru"
     }
 
-    /*private val admissionViewModel by lazy {
+    private val admissionViewModel by lazy {
         ViewModelProvider(this)[AdmissionViewModel::class.java]
-    }*/
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +47,20 @@ class AdmissionFragment : Fragment() {
     }
 
     private fun setupView() {
+        setupAdmissionDeadlines()
+        setupButtons()
+        observePdfDocuments()
+        admissionViewModel.fetchPdfDocuments()
+    }
+
+    private fun setupAdmissionDeadlines() {
         binding.admissionDeadlines.text = getString(R.string.st_admission_deadlines)
             .format(LocalDate.now().year, LocalDate.now().year)
         binding.admissionDeadlines2.text =
             getString(R.string.st_admission_deadlines2).format(LocalDate.now().year)
+    }
 
+    private fun setupButtons() {
         binding.throughPersonalAccountButton.setOnClickListener {
             updateBottomSheetContent(AdmissionVariant.PERSONAL_CABINET)
             bottomSheetDialog?.show()
@@ -67,6 +80,41 @@ class AdmissionFragment : Fragment() {
             updateBottomSheetContent(AdmissionVariant.EMAIL)
             bottomSheetDialog?.show()
         }
+    }
+
+    private fun observePdfDocuments() {
+        admissionViewModel.pdfDocuments.observe(viewLifecycleOwner) { documents ->
+            if (documents.isNotEmpty()) {
+                displayPdfDocuments(documents)
+                binding.applicationFormsCard.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun displayPdfDocuments(documents: List<PdfDocument>) {
+        binding.applicationFormsLayout.removeAllViews()
+        documents.forEach { document ->
+            val button = createPdfButton(document)
+            binding.applicationFormsLayout.addView(button)
+        }
+    }
+
+    private fun createPdfButton(document: PdfDocument): LayoutButton {
+        val button = LayoutButton(binding.root.context)
+        button.apply {
+            setText(document.title)
+            setIconStart(R.drawable.ic_pdf_document)
+            setIconEnd(R.drawable.ic_arrow_right)
+            setOnClickListener {
+                openPdfDocument(document.url)
+            }
+        }
+        return button
+    }
+
+    private fun openPdfDocument(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 
     private fun createBottomSheet() {

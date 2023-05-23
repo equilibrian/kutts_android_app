@@ -34,7 +34,8 @@
             app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_file"
             app:iconEnd="@drawable/ic_arrow_right"
-            app:text="@string/st_educational_programs"/>
+            app:text="@string/st_educational_programs"
+            app:backgroundColor="?attr/colorCardBackground"/>
 
         <su.th2empty.kutts.view.custom.LayoutButton
             android:id="@+id/entrance_tests_button"
@@ -44,7 +45,8 @@
             app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_edit"
             app:iconEnd="@drawable/ic_arrow_right"
-            app:text="@string/st_title_entrance_tests" />
+            app:text="@string/st_title_entrance_tests"
+            app:backgroundColor="?attr/colorCardBackground"/>
 
         <su.th2empty.kutts.view.custom.LayoutButton
             android:id="@+id/targeted_training_button"
@@ -54,7 +56,8 @@
             app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_target"
             app:iconEnd="@drawable/ic_arrow_right"
-            app:text="@string/st_targeted_training"/>
+            app:text="@string/st_targeted_training"
+            app:backgroundColor="?attr/colorCardBackground"/>
 
         <su.th2empty.kutts.view.custom.LayoutButton
             android:id="@+id/monitoring_button"
@@ -64,7 +67,8 @@
             app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_rating"
             app:iconEnd="@drawable/ic_arrow_right"
-            app:text="@string/st_title_monitoring"/>
+            app:text="@string/st_title_monitoring"
+            app:backgroundColor="?attr/colorCardBackground"/>
 
         <su.th2empty.kutts.view.custom.LayoutButton
             android:id="@+id/dormitory_info_button"
@@ -74,7 +78,8 @@
             app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_home_outlined"
             app:iconEnd="@drawable/ic_arrow_right"
-            app:text="@string/st_title_dormitory_info"/>
+            app:text="@string/st_title_dormitory_info"
+            app:backgroundColor="?attr/colorCardBackground"/>
 
         <su.th2empty.kutts.view.custom.LayoutButton
             android:id="@+id/orders_button"
@@ -84,7 +89,8 @@
             app:cornerRadius="16dp"
             app:iconStart="@drawable/ic_done"
             app:iconEnd="@drawable/ic_arrow_right"
-            app:text="@string/st_title_enrollment_orders"/>
+            app:text="@string/st_title_enrollment_orders"
+            app:backgroundColor="?attr/colorCardBackground"/>
     </LinearLayout>
 
     <su.th2empty.kutts.view.custom.LayoutButton
@@ -96,6 +102,7 @@
         app:iconStart="@drawable/ic_info"
         app:iconEnd="@drawable/ic_arrow_right"
         app:text="@string/st_title_about_app"
+        app:backgroundColor="?attr/colorCardBackground"
         app:layout_constraintTop_toBottomOf="@id/admission_committee_layout"
         app:layout_constraintStart_toStartOf="parent"/>
 

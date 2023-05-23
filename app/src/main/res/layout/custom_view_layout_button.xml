@@ -37,8 +37,11 @@
         android:text="@string/st_string_label"
         android:textFontWeight="500"
         android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon_start"
+        app:layout_constraintEnd_toStartOf="@id/icon_end"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView

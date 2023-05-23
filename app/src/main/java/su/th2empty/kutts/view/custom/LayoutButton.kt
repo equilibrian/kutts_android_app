@@ -48,6 +48,8 @@ class LayoutButton @JvmOverloads constructor(
         visibility = View.GONE
     }
 
+    private val background = GradientDrawable()
+
     init {
         // Get styled attributes from XML layout
         val a = context.obtainStyledAttributes(attrs, R.styleable.LayoutButton, defStyleAttr, 0)
@@ -57,9 +59,9 @@ class LayoutButton @JvmOverloads constructor(
         val text = a.getString(R.styleable.LayoutButton_text)
         val iconEndRes = a.getResourceId(R.styleable.LayoutButton_iconEnd, 0)
         val cornerRadius = a.getDimensionPixelSize(R.styleable.LayoutButton_cornerRadius, dpToPx(12))
-        val colorSurfaceAttr = com.google.android.material.R.attr.colorBackgroundFloating
+        val colorSurfaceVariant = com.google.android.material.R.attr.colorSurfaceVariant
         val outValue = TypedValue()
-        context.theme.resolveAttribute(colorSurfaceAttr, outValue, true)
+        context.theme.resolveAttribute(colorSurfaceVariant, outValue, true)
         val defaultColor = outValue.data
         val backgroundColor = a.getColor(
             R.styleable.LayoutButton_backgroundColor,
@@ -73,7 +75,6 @@ class LayoutButton @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.custom_view_layout_button, this, true)
 
         // Apply corner radius to background
-        val background = GradientDrawable()
         background.cornerRadii = floatArrayOf(
             cornerRadius.toFloat(), cornerRadius.toFloat(),
             cornerRadius.toFloat(), cornerRadius.toFloat(),
@@ -158,6 +159,40 @@ class LayoutButton @JvmOverloads constructor(
         } else {
             iconEndView.visibility = View.GONE
         }
+    }
+
+    fun setBackground(resId: Int) {
+        background.setColor(resId)
+    }
+
+    fun setMargins(left: Int, top: Int, right: Int, bottom: Int) {
+        val layoutParams = layoutParams as LayoutParams
+        layoutParams.setMargins(dpToPx(left), dpToPx(top), dpToPx(right), dpToPx(bottom))
+        requestLayout()
+    }
+
+    fun setMarginStart(margin: Int) {
+        val layoutParams = layoutParams as LayoutParams
+        layoutParams.marginStart = dpToPx(margin)
+        requestLayout()
+    }
+
+    fun setMarginEnd(margin: Int) {
+        val layoutParams = layoutParams as LayoutParams
+        layoutParams.marginEnd = dpToPx(margin)
+        requestLayout()
+    }
+
+    fun setMarginTop(margin: Int) {
+        val layoutParams = layoutParams as LayoutParams
+        layoutParams.topMargin = dpToPx(margin)
+        requestLayout()
+    }
+
+    fun setMarginBottom(margin: Int) {
+        val layoutParams = layoutParams as LayoutParams
+        layoutParams.bottomMargin = dpToPx(margin)
+        requestLayout()
     }
 
     private fun dpToPx(dp: Int): Int {
