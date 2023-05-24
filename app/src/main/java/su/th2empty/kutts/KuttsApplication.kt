@@ -5,22 +5,26 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import su.th2empty.kutts.repository.KuttsDatabase
-import su.th2empty.kutts.repository.KuttsDatabaseHelper
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
-class App : Application() {
+class KuttsApplication : Application() {
+
+    companion object {
+        lateinit var instance: KuttsApplication
+    }
 
     override fun onCreate() {
         super.onCreate()
+
+        instance = this
+
         if (BuildConfig.DEBUG) {
             plant(Timber.DebugTree())
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val database = KuttsDatabase.getDatabase(this@App)
-            val contacts = KuttsDatabaseHelper.loadContactsFromAsset(this@App, "database.db")
-            database.contactsDao().insertAll(contacts)
+            KuttsDatabase.copyDatabaseFromAssets(instance)
         }
     }
 }

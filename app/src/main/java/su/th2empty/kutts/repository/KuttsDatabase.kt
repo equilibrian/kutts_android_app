@@ -15,9 +15,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import su.th2empty.kutts.model.Contact
+import su.th2empty.kutts.model.Dormitory
 import su.th2empty.kutts.model.EducationalCategory
 import su.th2empty.kutts.model.EducationalProgram
 import su.th2empty.kutts.model.Location
+import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * The Room database for the application.
@@ -26,7 +31,8 @@ import su.th2empty.kutts.model.Location
     Contact::class,
     Location::class,
     EducationalProgram::class,
-    EducationalCategory::class], version = 1)
+    EducationalCategory::class,
+    Dormitory::class], version = 1)
 abstract class KuttsDatabase : RoomDatabase() {
 
     /**
@@ -47,9 +53,13 @@ abstract class KuttsDatabase : RoomDatabase() {
      */
     abstract fun educationalProgramsDao(): EducationalProgramsDao
 
+    abstract fun dormitoryDao(): DormitoryDao
+
     companion object {
         @Volatile
         private var INSTANCE: KuttsDatabase? = null
+
+        private const val DATABASE_NAME = "database.db"
 
         /**
          * Returns an instance of the KuttsDatabase.
@@ -61,8 +71,29 @@ abstract class KuttsDatabase : RoomDatabase() {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     KuttsDatabase::class.java,
-                    "database.db"
+                    DATABASE_NAME
                 ).build().also { INSTANCE = it }
+            }
+        }
+
+        /**
+         * Copies the pre-populated database from assets to the local storage.
+         * @param context The application context.
+         */
+        fun copyDatabaseFromAssets(context: Context) {
+            val databasePath = context.getDatabasePath(DATABASE_NAME).path
+            if (File(databasePath).exists()) {
+                return
+            }
+
+            try {
+                val inputStream = context.assets.open(DATABASE_NAME)
+                val outputStream = FileOutputStream(databasePath)
+                inputStream.copyTo(outputStream)
+                inputStream.close()
+                outputStream.close()
+            } catch (ex: IOException) {
+                Timber.e(ex)
             }
         }
     }

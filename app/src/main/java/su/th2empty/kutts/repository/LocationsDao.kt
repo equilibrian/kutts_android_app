@@ -27,4 +27,7 @@ interface LocationsDao {
      */
     @Query("SELECT * FROM locations")
     fun getAllLocations(): LiveData<List<Location>>
+
+    @Query("SELECT * FROM locations WHERE id = :id")
+    fun getLocationById(id: Int): Location
 }

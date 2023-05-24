@@ -5,7 +5,7 @@ plugins {
 }
 
 def versionMajor = 0
-def versionMinor = 12
+def versionMinor = 14
 def versionPatch = 0
 
 android {
@@ -18,7 +18,7 @@ android {
             production: ""
     ]
 
-    def currentStage = "dev"
+    def currentStage = "beta"
 
     defaultConfig {
         applicationId "su.th2empty.kutts"
@@ -52,7 +52,6 @@ android {
             }
         }
         debug {
-            applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
             debuggable true
         }

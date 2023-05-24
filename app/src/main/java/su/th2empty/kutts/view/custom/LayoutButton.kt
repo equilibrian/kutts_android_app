@@ -58,7 +58,7 @@ class LayoutButton @JvmOverloads constructor(
         val iconStartRes = a.getResourceId(R.styleable.LayoutButton_iconStart, 0)
         val text = a.getString(R.styleable.LayoutButton_text)
         val iconEndRes = a.getResourceId(R.styleable.LayoutButton_iconEnd, 0)
-        val cornerRadius = a.getDimensionPixelSize(R.styleable.LayoutButton_cornerRadius, dpToPx(12))
+        val cornerRadius = a.getDimensionPixelSize(R.styleable.LayoutButton_cornerRadius, dpToPx(16))
         val colorSurfaceVariant = com.google.android.material.R.attr.colorSurfaceVariant
         val outValue = TypedValue()
         context.theme.resolveAttribute(colorSurfaceVariant, outValue, true)

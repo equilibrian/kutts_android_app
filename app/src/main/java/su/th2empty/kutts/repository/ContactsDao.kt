@@ -12,8 +12,6 @@ package su.th2empty.kutts.repository
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import su.th2empty.kutts.model.Contact
 
@@ -38,13 +36,4 @@ interface ContactsDao {
      */
     @Query("SELECT * FROM contacts WHERE id = :id")
     fun getContactById(id: Int): LiveData<Contact>
-
-    /**
-     * Inserts a list of contacts into the 'contacts' table.
-     * If a contact with the same ID already exists, it will be replaced.
-     *
-     * @param contacts The list of contacts to insert.
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(contacts: List<Contact>)
 }

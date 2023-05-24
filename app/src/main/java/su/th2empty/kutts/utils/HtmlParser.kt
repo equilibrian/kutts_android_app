@@ -10,14 +10,19 @@
 
 package su.th2empty.kutts.utils
 
+import android.net.Uri
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import su.th2empty.kutts.KuttsApplication
+import su.th2empty.kutts.R
 import su.th2empty.kutts.model.PdfDocument
 import timber.log.Timber
 
 class HtmlParser {
+    private val context = KuttsApplication.instance.applicationContext
 
     companion object {
+        private const val BASE_URL = "https://kutts.ru/abiturientam/"
 
         @Throws(Exception::class)
         fun getPdfDocuments(url: String): List<PdfDocument> {
@@ -39,5 +44,26 @@ class HtmlParser {
 
             return pdfDocuments
         }
+    }
+
+    @Throws(Exception::class)
+    fun getMonitoringLink(): Map<String, Uri> {
+        val links: MutableMap<String, Uri> = mutableMapOf()
+
+        try {
+            val doc: Document = Jsoup.connect(BASE_URL).get()
+            val monitoringLinkElement = doc.select("a").firstOrNull {
+                it.text().contains(context.getString(R.string.st_title_monitoring))
+            }
+            val monitoringLink = monitoringLinkElement?.attr("href")
+
+            if (monitoringLink != null) {
+                links["monitoring"] = Uri.parse(monitoringLink)
+            }
+        } catch (ex: Exception) {
+            Timber.e(ex)
+        }
+
+        return links
     }
 }

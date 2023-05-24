@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Denis <th2empty> Novikov
+ * Copyright (c) 2023 Denis Novikov
  *
  * This file is part of KUTTS.
  * KUTTS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3, as published by the Free Software Foundation.
@@ -10,11 +10,6 @@
 
 package su.th2empty.kutts.repository
 
-import androidx.lifecycle.LiveData
-import su.th2empty.kutts.model.Location
-
-class LocationsRepository(private val locationsDao: LocationsDao) {
-    val allLocations: LiveData<List<Location>> = locationsDao.getAllLocations()
-
-    fun getLocationById(id: Int): Location = locationsDao.getLocationById(id)
+class DormitoryRepository(dormitoryDao: DormitoryDao) {
+    val dormitoryInfo = dormitoryDao.getDormitoryInfo()
 }

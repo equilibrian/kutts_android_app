@@ -5,17 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.FragmentDashboardBinding
 import su.th2empty.kutts.view.AboutAppActivity
+import su.th2empty.kutts.view.DormitoryActivity
 import su.th2empty.kutts.view.EducationalProgramsActivity
+import su.th2empty.kutts.view.EnrollmentOrdersActivity
 import su.th2empty.kutts.view.EntranceTestsActivity
 import su.th2empty.kutts.view.TargetedTrainingActivity
+import su.th2empty.kutts.viewmodel.DashboardViewModel
 
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by lazy {
+        ViewModelProvider(this)[DashboardViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +38,23 @@ class DashboardFragment : Fragment() {
         setupView()
 
         return root
+    }
+
+    private fun observeLinks() {
+        viewModel.links.observe(viewLifecycleOwner) { links ->
+            if (links.isNotEmpty()) {
+                val intentMonitoring = Intent(Intent.ACTION_VIEW, links["monitoring"])
+                binding.monitoringButton.setOnClickListener {
+                    startActivity(intentMonitoring)
+                }
+            } else {
+                Toast.makeText(
+                    binding.root.context,
+                    R.string.st_temporary_unavailable_error,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     private fun setupView() {
@@ -46,6 +73,17 @@ class DashboardFragment : Fragment() {
         binding.targetedTrainingButton.setOnClickListener {
             startActivity(Intent(activity, TargetedTrainingActivity::class.java))
         }
+
+        binding.ordersButton.setOnClickListener {
+            startActivity(Intent(activity, EnrollmentOrdersActivity::class.java))
+        }
+
+        binding.dormitoryInfoButton.setOnClickListener {
+            startActivity(Intent(activity, DormitoryActivity::class.java))
+        }
+
+        observeLinks()
+        viewModel.fetchLinks()
     }
 
     override fun onDestroyView() {
