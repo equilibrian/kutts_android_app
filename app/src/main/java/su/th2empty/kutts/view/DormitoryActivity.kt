@@ -15,12 +15,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.util.TypedValue
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.ActivityDormitoryBinding
 import su.th2empty.kutts.model.PdfDocument
+import su.th2empty.kutts.utils.ImageLoader
 import su.th2empty.kutts.view.custom.LayoutButton
 import su.th2empty.kutts.viewmodel.DormitoryViewModel
 
@@ -108,11 +110,33 @@ class DormitoryActivity : AppCompatActivity() {
         }
     }
 
+    private fun observeGallery() {
+        viewModel.imgLinks.observe(this) { links ->
+            if (links.size >= 3) {
+                val imgLoader = ImageLoader()
+                imgLoader.apply {
+                    loadImageIntoView(binding.firstImg, links[0])
+                    loadImageIntoView(binding.secondImg, links[1])
+                    loadImageIntoView(binding.thirdImg, links[2])
+                }
+
+                binding.galleryCard.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.fetchImgLinks()
+
+        binding.openGalleryButton.setOnClickListener {
+            startActivity(Intent(this, GalleryActivity::class.java))
+        }
+    }
+
     private fun setupView() {
         setupActionBar()
 
         observeDormitoryInfo()
         observePdfDocuments()
+        observeGallery()
         viewModel.fetchPdfDocuments()
     }
 

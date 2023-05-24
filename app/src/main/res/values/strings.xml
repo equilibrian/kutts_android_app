@@ -108,5 +108,9 @@
     <string name="st_title_description">Описание:</string>
     <string name="st_title_dormitory">Общежитие</string>
     <string name="st_location_format">%1$s, %2$s, %3$s</string>
+    <string name="st_title_gallery">Галерея</string>
+    <string name="st_img">img</string>
+    <string name="st_show_all">Показать все</string>
+    <string name="st_title_photos">Фотографии</string>
 
 </resources>

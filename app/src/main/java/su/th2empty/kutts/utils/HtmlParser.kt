@@ -44,6 +44,26 @@ class HtmlParser {
 
             return pdfDocuments
         }
+
+        @Throws(Exception::class)
+        fun getImages(url: String): List<Uri>  {
+            val images = mutableListOf<Uri>()
+
+            try {
+                val doc: Document = Jsoup.connect(url).get()
+                val links = doc.select("img[src~=(?i)\\.(png|jpe?g)]")
+
+                for (element in links) {
+                    val imageUrl = element.absUrl("src")
+                    val imageUri = Uri.parse(imageUrl)
+                    images.add(imageUri)
+                }
+            } catch (ex: Exception) {
+                Timber.e(ex)
+            }
+
+            return images
+        }
     }
 
     @Throws(Exception::class)

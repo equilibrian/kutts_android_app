@@ -14,13 +14,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import su.th2empty.kutts.BuildConfig
 import su.th2empty.kutts.model.Contact
 import su.th2empty.kutts.model.Dormitory
 import su.th2empty.kutts.model.EducationalCategory
 import su.th2empty.kutts.model.EducationalProgram
 import su.th2empty.kutts.model.Location
+import su.th2empty.kutts.utils.AppPreferences
+import su.th2empty.kutts.utils.VERSION_CODE_PARAM
+import su.th2empty.kutts.utils.VERSION_CODE_PARAM_UNSET
 import timber.log.Timber
-import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -32,7 +35,7 @@ import java.io.IOException
     Location::class,
     EducationalProgram::class,
     EducationalCategory::class,
-    Dormitory::class], version = 1)
+    Dormitory::class], version = 2)
 abstract class KuttsDatabase : RoomDatabase() {
 
     /**
@@ -82,8 +85,12 @@ abstract class KuttsDatabase : RoomDatabase() {
          */
         fun copyDatabaseFromAssets(context: Context) {
             val databasePath = context.getDatabasePath(DATABASE_NAME).path
-            if (File(databasePath).exists()) {
-                return
+
+            AppPreferences(context).let {  prefs ->
+                val versionCode = prefs.getParam(VERSION_CODE_PARAM, VERSION_CODE_PARAM_UNSET)
+                if (versionCode != BuildConfig.VERSION_CODE) {
+                    prefs.putParam(VERSION_CODE_PARAM, BuildConfig.VERSION_CODE)
+                } else return
             }
 
             try {

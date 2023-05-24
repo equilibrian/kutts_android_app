@@ -23,4 +23,20 @@ class AppPreferences(context: Context) {
     fun putBoolean(key: String, value: Boolean) {
         prefs.edit().putBoolean(key, value).apply()
     }
+
+    fun getParam(key: String, defaultValue: String): String? {
+        return prefs.getString(key, defaultValue)
+    }
+
+    fun putParam(key: String, value: String) {
+        prefs.edit().putString(key, value).apply()
+    }
+
+    fun getParam(key: String, defaultValue: Int): Int {
+        return prefs.getInt(key, defaultValue)
+    }
+
+    fun putParam(key: String, value: Int) {
+        prefs.edit().putInt(key, value).apply()
+    }
 }
