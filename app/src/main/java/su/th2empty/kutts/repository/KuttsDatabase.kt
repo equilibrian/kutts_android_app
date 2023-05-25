@@ -14,15 +14,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import su.th2empty.kutts.BuildConfig
 import su.th2empty.kutts.model.Contact
 import su.th2empty.kutts.model.Dormitory
 import su.th2empty.kutts.model.EducationalCategory
 import su.th2empty.kutts.model.EducationalProgram
 import su.th2empty.kutts.model.Location
-import su.th2empty.kutts.utils.AppPreferences
-import su.th2empty.kutts.utils.VERSION_CODE_PARAM
-import su.th2empty.kutts.utils.VERSION_CODE_PARAM_UNSET
 import timber.log.Timber
 import java.io.FileOutputStream
 import java.io.IOException
@@ -35,7 +31,7 @@ import java.io.IOException
     Location::class,
     EducationalProgram::class,
     EducationalCategory::class,
-    Dormitory::class], version = 1)
+    Dormitory::class], version = 2)
 abstract class KuttsDatabase : RoomDatabase() {
 
     /**
@@ -59,10 +55,11 @@ abstract class KuttsDatabase : RoomDatabase() {
     abstract fun dormitoryDao(): DormitoryDao
 
     companion object {
+        const val TAG = "KuttsDatabase"
+        const val DATABASE_NAME = "database.db"
+
         @Volatile
         private var INSTANCE: KuttsDatabase? = null
-
-        private const val DATABASE_NAME = "database.db"
 
         /**
          * Returns an instance of the KuttsDatabase.
@@ -75,7 +72,7 @@ abstract class KuttsDatabase : RoomDatabase() {
                     context.applicationContext,
                     KuttsDatabase::class.java,
                     DATABASE_NAME
-                ).build().also { INSTANCE = it }
+                ).fallbackToDestructiveMigration().build()
             }
         }
 
@@ -83,24 +80,16 @@ abstract class KuttsDatabase : RoomDatabase() {
          * Copies the pre-populated database from assets to the local storage.
          * @param context The application context.
          */
-        fun copyDatabaseFromAssets(context: Context) {
-            val databasePath = context.getDatabasePath(DATABASE_NAME).path
-
-            AppPreferences(context).let {  prefs ->
-                val versionCode = prefs.getParam(VERSION_CODE_PARAM, VERSION_CODE_PARAM_UNSET)
-                if (versionCode != BuildConfig.VERSION_CODE) {
-                    prefs.putParam(VERSION_CODE_PARAM, BuildConfig.VERSION_CODE)
-                } else return
-            }
-
+        fun copyDatabaseFromAssets(context: Context, databasePath: String) {
             try {
                 val inputStream = context.assets.open(DATABASE_NAME)
                 val outputStream = FileOutputStream(databasePath)
                 inputStream.copyTo(outputStream)
                 inputStream.close()
                 outputStream.close()
+                Timber.tag(TAG).i("Copying database successfully completed.")
             } catch (ex: IOException) {
-                Timber.e(ex)
+                Timber.tag(TAG).e(ex)
             }
         }
     }

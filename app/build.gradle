@@ -6,7 +6,7 @@ plugins {
 
 def versionMajor = 0
 def versionMinor = 16
-def versionPatch = 0
+def versionPatch = 1
 
 android {
     namespace 'su.th2empty.kutts'
@@ -44,7 +44,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            debuggable false
+            debuggable true
             applicationVariants.all { variant ->
                  variant.outputs.all {
                      outputFileName = "kutts-${variant.versionName}.apk"
