@@ -12,6 +12,7 @@ package su.th2empty.kutts.view.adapters
 
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
@@ -22,7 +23,7 @@ import su.th2empty.kutts.databinding.RecyclerViewGalleryItemBinding
 import su.th2empty.kutts.utils.ImageLoader
 import su.th2empty.kutts.view.decorations.RecyclerItemDecoration
 
-class GalleryItemRecyclerViewAdapter
+class GalleryItemRecyclerViewAdapter(private val listener: (List<Uri>, Int, currentItem: View) -> Unit)
     : ListAdapter<Uri, GalleryItemRecyclerViewAdapter.ViewHolder>(DiffCallback) {
 
     private lateinit var itemDecoration: RecyclerItemDecoration
@@ -59,6 +60,7 @@ class GalleryItemRecyclerViewAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val img = getItem(position)
         holder.bind(img)
+        holder.itemView.setOnClickListener { listener.invoke(currentList, position, holder.itemView) }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

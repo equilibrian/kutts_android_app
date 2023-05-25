@@ -35,7 +35,7 @@ import java.io.IOException
     Location::class,
     EducationalProgram::class,
     EducationalCategory::class,
-    Dormitory::class], version = 2)
+    Dormitory::class], version = 1)
 abstract class KuttsDatabase : RoomDatabase() {
 
     /**

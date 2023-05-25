@@ -38,7 +38,8 @@ class ImageLoader {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    return false
+                    throw Exception("Failed to load image")
+                    //return false
                 }
 
                 override fun onResourceReady(

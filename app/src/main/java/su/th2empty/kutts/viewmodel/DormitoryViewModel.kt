@@ -11,12 +11,10 @@
 package su.th2empty.kutts.viewmodel
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -45,8 +43,6 @@ class DormitoryViewModel @Inject constructor(
     val dormitoryLocation: LiveData<Location> get() = _dormitoryLocation
     private val _pdfDocuments = MutableLiveData<List<PdfDocument>>()
     val pdfDocuments: LiveData<List<PdfDocument>> get() = _pdfDocuments
-    private val _imgLinks = MutableLiveData<List<Uri>>()
-    val imgLinks: LiveData<List<Uri>> get() = _imgLinks
 
     @Suppress("unused")
     constructor(application: Application) : this(
@@ -76,23 +72,6 @@ class DormitoryViewModel @Inject constructor(
             }
 
             _dormitoryLocation.value = location
-        }
-    }
-
-    @Throws(Exception::class)
-    fun fetchImgLinks() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val links = withContext(Dispatchers.IO) {
-                    HtmlParser.getImages(GalleryViewModel.DORMITORY_WEB_URL)
-                }
-
-                withContext(Dispatchers.Main) {
-                    _imgLinks.value = links
-                }
-            } catch (ex: Exception) {
-                Timber.e(ex)
-            }
         }
     }
 }

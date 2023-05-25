@@ -10,8 +10,10 @@
 
 package su.th2empty.kutts.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import su.th2empty.kutts.R
@@ -42,7 +44,15 @@ class GalleryActivity : AppCompatActivity() {
             )
             binding.imagesRecycler.layoutManager = layoutManager
 
-            val imagesRecyclerViewAdapter = GalleryItemRecyclerViewAdapter()
+            val imagesRecyclerViewAdapter = GalleryItemRecyclerViewAdapter() { _, currentPosition, itemView ->
+                val intent = Intent(this, ImageViewerActivity::class.java).apply {
+                    putExtra("links", links.toTypedArray())
+                    putExtra("currentPosition", currentPosition)
+                }
+
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, itemView, "imageTransition")
+                startActivity(intent, options.toBundle())
+            }
             imagesRecyclerViewAdapter.submitList(links)
             binding.imagesRecycler.adapter = imagesRecyclerViewAdapter
         }

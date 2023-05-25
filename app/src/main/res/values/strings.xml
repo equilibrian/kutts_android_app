@@ -112,5 +112,8 @@
     <string name="st_img">img</string>
     <string name="st_show_all">Показать все</string>
     <string name="st_title_photos">Фотографии</string>
+    <string name="st_images_count_format">%d из %d</string>
+    <string name="st_open_gallery">Открыть галерею</string>
+    <string name="st_photo_viewing">Просмотр изображений</string>
 
 </resources>
