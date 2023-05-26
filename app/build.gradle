@@ -4,8 +4,8 @@ plugins {
     id 'kotlin-kapt'
 }
 
-def versionMajor = 0
-def versionMinor = 17
+def versionMajor = 1
+def versionMinor = 0
 def versionPatch = 0
 
 android {
@@ -18,7 +18,7 @@ android {
             prod: ""
     ]
 
-    def currentStage = "beta"
+    def currentStage = "prod"
 
     defaultConfig {
         applicationId "su.th2empty.kutts"
@@ -44,7 +44,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            debuggable true
+            debuggable false
             applicationVariants.all { variant ->
                  variant.outputs.all {
                      outputFileName = "kutts-${variant.versionName}.apk"
@@ -99,7 +99,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.jakewharton.timber:timber:5.0.1'
     implementation 'com.google.dagger:dagger:2.28.3'
     kapt 'com.google.dagger:dagger-compiler:2.28.3'
