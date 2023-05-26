@@ -6,7 +6,7 @@ plugins {
 
 def versionMajor = 0
 def versionMinor = 16
-def versionPatch = 1
+def versionPatch = 2
 
 android {
     namespace 'su.th2empty.kutts'
@@ -15,7 +15,7 @@ android {
     def developmentStages = [
             dev: "-dev",
             beta: "-beta",
-            production: ""
+            prod: ""
     ]
 
     def currentStage = "beta"

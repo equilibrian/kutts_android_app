@@ -14,12 +14,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import su.th2empty.kutts.KuttsApplication
+import su.th2empty.kutts.exceptions.DatabaseValidationException
 import su.th2empty.kutts.model.Contact
 import su.th2empty.kutts.model.Dormitory
 import su.th2empty.kutts.model.EducationalCategory
 import su.th2empty.kutts.model.EducationalProgram
 import su.th2empty.kutts.model.Location
+import su.th2empty.kutts.security.Security
 import timber.log.Timber
+import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -36,30 +41,74 @@ abstract class KuttsDatabase : RoomDatabase() {
 
     /**
      * Returns the Data Access Object (DAO) for contacts.
-     * @return ContactsDao object.
+     * @return [ContactsDao] object.
      */
     abstract fun contactsDao(): ContactsDao
 
     /**
      * Returns the Data Access Object (DAO) for locations.
-     * @return LocationsDao object.
+     * @return [LocationsDao] object.
      */
     abstract fun locationsDao(): LocationsDao
 
     /**
      * Returns the Data Access Object (DAO) for educational programs.
-     * @return EducationalProgramsDao object.
+     * @return [EducationalProgramsDao] object.
      */
     abstract fun educationalProgramsDao(): EducationalProgramsDao
 
+    /**
+     * Returns the Data Access Object (DAO) for dormitory
+     * @return [DormitoryDao] object
+     */
     abstract fun dormitoryDao(): DormitoryDao
 
     companion object {
-        const val TAG = "KuttsDatabase"
-        const val DATABASE_NAME = "database.db"
+        private const val TAG = "KuttsDatabase"
+        private const val DATABASE_NAME = "database.db"
+        private val databasePath: String = KuttsApplication.instance.getDatabasePath(DATABASE_NAME).path
 
         @Volatile
         private var INSTANCE: KuttsDatabase? = null
+
+        private fun compareDatabases(context: Context): Boolean {
+            val assetDatabaseStream = context.assets.open("database.db")
+
+            val deviceDatabaseFile = File(databasePath)
+            val deviceDatabaseStream = FileInputStream(deviceDatabaseFile)
+
+            return try {
+                val assetHash = Security.calculateMD5Hash(assetDatabaseStream)
+                val deviceHash = Security.calculateMD5Hash(deviceDatabaseStream)
+
+                assetHash == deviceHash
+            } catch (ex: IOException) {
+                Timber.tag(TAG).e(ex)
+                false
+            } finally {
+                assetDatabaseStream.close()
+                deviceDatabaseStream.close()
+            }
+        }
+
+        @Throws(DatabaseValidationException::class)
+        fun validateDatabase(context: Context) {
+            Timber.tag(TAG).i("Validation database...")
+            val existingDatabase = File(databasePath)
+
+            if (!existingDatabase.exists() || !compareDatabases(context))
+                throw DatabaseValidationException()
+
+            Timber.tag(TAG).i("Validation passed")
+        }
+
+        private fun setupDatabase(context: Context): KuttsDatabase {
+            return Room.databaseBuilder(
+                context.applicationContext,
+                KuttsDatabase::class.java,
+                DATABASE_NAME
+            ).fallbackToDestructiveMigration().build()
+        }
 
         /**
          * Returns an instance of the KuttsDatabase.
@@ -68,11 +117,9 @@ abstract class KuttsDatabase : RoomDatabase() {
          */
         fun getDatabase(context: Context): KuttsDatabase {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
-                    context.applicationContext,
-                    KuttsDatabase::class.java,
-                    DATABASE_NAME
-                ).fallbackToDestructiveMigration().build()
+                val database = setupDatabase(context)
+                INSTANCE = database
+                return@synchronized database
             }
         }
 
@@ -80,7 +127,8 @@ abstract class KuttsDatabase : RoomDatabase() {
          * Copies the pre-populated database from assets to the local storage.
          * @param context The application context.
          */
-        fun copyDatabaseFromAssets(context: Context, databasePath: String) {
+        fun copyDatabaseFromAssets(context: Context) {
+            Timber.tag(TAG).i("copying database from assets...")
             try {
                 val inputStream = context.assets.open(DATABASE_NAME)
                 val outputStream = FileOutputStream(databasePath)

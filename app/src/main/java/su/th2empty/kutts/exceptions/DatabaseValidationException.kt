@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Denis <th2empty> Novikov
+ * Copyright (c) 2023 Denis Novikov
  *
  * This file is part of KUTTS.
  * KUTTS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3, as published by the Free Software Foundation.
@@ -8,19 +8,6 @@
  *
  */
 
-package su.th2empty.kutts.utils
+package su.th2empty.kutts.exceptions
 
-import android.content.Context
-import android.content.SharedPreferences
-
-class AppPreferences(context: Context) {
-    private val prefs: SharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
-        return prefs.getBoolean(key, defaultValue)
-    }
-
-    fun putBoolean(key: String, value: Boolean) {
-        prefs.edit().putBoolean(key, value).apply()
-    }
-}
+class DatabaseValidationException(message: String = "Database validation failed") : Exception(message)
