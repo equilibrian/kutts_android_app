@@ -12,12 +12,14 @@ package su.th2empty.kutts.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.ActivityGalleryBinding
+import su.th2empty.kutts.utils.Util
 import su.th2empty.kutts.view.adapters.GalleryItemRecyclerViewAdapter
 import su.th2empty.kutts.viewmodel.GalleryViewModel
 
@@ -36,7 +38,9 @@ class GalleryActivity : AppCompatActivity() {
         return if (spanCount > 0) spanCount else 1
     }
 
-    private fun setupView() {
+    private fun observeImages() {
+        viewModel.fetchImgLinks()
+
         viewModel.imgLinks.observe(this) { links ->
             val layoutManager = StaggeredGridLayoutManager(
                 calculateSpanCount(),
@@ -56,8 +60,19 @@ class GalleryActivity : AppCompatActivity() {
             imagesRecyclerViewAdapter.submitList(links)
             binding.imagesRecycler.adapter = imagesRecyclerViewAdapter
         }
+    }
 
-        viewModel.fetchImgLinks()
+    private fun setupView() {
+        if (Util.isInternetAvailable(this)) {
+            observeImages()
+            binding.errorLayout.visibility = View.GONE
+        } else {
+            binding.errorLayout.visibility = View.VISIBLE
+        }
+
+        binding.retryButton.setOnClickListener {
+            setupView()
+        }
     }
 
     private fun setupActionBar() {

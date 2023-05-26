@@ -115,5 +115,6 @@
     <string name="st_images_count_format">%d из %d</string>
     <string name="st_open_gallery">Открыть галерею</string>
     <string name="st_photo_viewing">Просмотр изображений</string>
+    <string name="st_network_error">Отсутствует подключение к интернету</string>
 
 </resources>

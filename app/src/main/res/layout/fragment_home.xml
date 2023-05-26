@@ -92,147 +92,163 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/working_mode_card"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/basic_info_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="28dp"
-            app:cardElevation="0dp"
-            app:layout_constraintTop_toBottomOf="@id/basic_info_container">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@id/basic_info_container"
+            android:visibility="gone">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/working_mode_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="12dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="12dp"
-                android:background="@drawable/rounded_corners_background">
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp"
+                    android:background="@drawable/rounded_corners_background">
+
+                    <TextView
+                        android:id="@+id/working_mode_header"
+                        style="@style/TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/colorOnBackground"
+                        android:text="@string/st_title_working_mode"
+                        android:gravity="center"
+                        android:textFontWeight="600"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/waking_days"
+                        style="@style/BodyMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/st_waking_days"
+                        app:layout_constraintTop_toBottomOf="@id/working_mode_header"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/saturday"
+                        style="@style/BodyMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/st_saturday_workin_mode"
+                        app:layout_constraintTop_toBottomOf="@id/waking_days"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/sunday"
+                        style="@style/BodyMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/st_sunday_workin_mode"
+                        app:layout_constraintTop_toBottomOf="@id/saturday"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contacts_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@id/working_mode_card">
 
                 <TextView
-                    android:id="@+id/working_mode_header"
+                    android:id="@+id/title_contacts"
                     style="@style/TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/colorOnBackground"
-                    android:text="@string/st_title_working_mode"
+                    android:text="@string/st_title_contacts"
                     android:gravity="center"
                     android:textFontWeight="600"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/contacts_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:animationCache="true"
+                    android:fadeScrollbars="true"
+                    android:fadingEdge="horizontal"
+                    android:fadingEdgeLength="1dp"
+                    android:nestedScrollingEnabled="true"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/contact_recycler_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/title_contacts"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
                 <TextView
-                    android:id="@+id/waking_days"
-                    style="@style/BodyMedium"
+                    android:id="@+id/title_locations"
+                    style="@style/TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/st_waking_days"
-                    app:layout_constraintTop_toBottomOf="@id/working_mode_header"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:textColor="?attr/colorOnBackground"
+                    android:text="@string/st_title_locations"
+                    android:gravity="center"
+                    android:textFontWeight="600"
+                    app:layout_constraintTop_toBottomOf="@id/contacts_recycler"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-                <TextView
-                    android:id="@+id/saturday"
-                    style="@style/BodyMedium"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/locations_recycler"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/st_saturday_workin_mode"
-                    app:layout_constraintTop_toBottomOf="@id/waking_days"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
-                <TextView
-                    android:id="@+id/sunday"
-                    style="@style/BodyMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/st_sunday_workin_mode"
-                    app:layout_constraintTop_toBottomOf="@id/saturday"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:layout_marginTop="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:animationCache="true"
+                    android:fadeScrollbars="true"
+                    android:fadingEdge="horizontal"
+                    android:fadingEdgeLength="1dp"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/location_recycler_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/title_locations"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/contacts_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@id/working_mode_card">
-
-            <TextView
-                android:id="@+id/title_contacts"
-                style="@style/TitleMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
-                android:text="@string/st_title_contacts"
-                android:gravity="center"
-                android:textFontWeight="600"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/contacts_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:animationCache="true"
-                android:fadeScrollbars="true"
-                android:fadingEdge="horizontal"
-                android:fadingEdgeLength="1dp"
-                android:nestedScrollingEnabled="true"
-                android:scrollbars="none"
-                tools:listitem="@layout/contact_recycler_item"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/title_contacts"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/title_locations"
-                style="@style/TitleMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textColor="?attr/colorOnBackground"
-                android:text="@string/st_title_locations"
-                android:gravity="center"
-                android:textFontWeight="600"
-                app:layout_constraintTop_toBottomOf="@id/contacts_recycler"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/locations_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:animationCache="true"
-                android:fadeScrollbars="true"
-                android:fadingEdge="horizontal"
-                android:fadingEdgeLength="1dp"
-                android:nestedScrollingEnabled="false"
-                android:scrollbars="none"
-                tools:listitem="@layout/location_recycler_item"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/title_locations"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

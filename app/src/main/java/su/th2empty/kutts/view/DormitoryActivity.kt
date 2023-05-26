@@ -15,12 +15,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.util.TypedValue
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.ActivityDormitoryBinding
 import su.th2empty.kutts.model.PdfDocument
+import su.th2empty.kutts.utils.Util
 import su.th2empty.kutts.view.custom.LayoutButton
 import su.th2empty.kutts.viewmodel.DormitoryViewModel
 
@@ -52,10 +54,18 @@ class DormitoryActivity : AppCompatActivity() {
     }
 
     private fun observePdfDocuments() {
-        viewModel.pdfDocuments.observe(this) { documents ->
-            if (documents.isNotEmpty()) {
-                displayPdfDocuments(documents)
+        viewModel.fetchPdfDocuments()
+        if (Util.isInternetAvailable(binding.root.context)) {
+            viewModel.pdfDocuments.observe(this) { documents ->
+                if (documents.isNotEmpty()) {
+                    displayPdfDocuments(documents)
+                    binding.progressBar.visibility = View.GONE
+                    binding.errorLayout.visibility = View.GONE
+                }
             }
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.errorLayout.visibility = View.VISIBLE
         }
     }
 
@@ -112,10 +122,13 @@ class DormitoryActivity : AppCompatActivity() {
         setupActionBar()
         observeDormitoryInfo()
         observePdfDocuments()
-        viewModel.fetchPdfDocuments()
 
         binding.openGalleryButton.setOnClickListener {
             startActivity(Intent(this, GalleryActivity::class.java))
+        }
+
+        binding.retryButton.setOnClickListener {
+            observePdfDocuments()
         }
     }
 

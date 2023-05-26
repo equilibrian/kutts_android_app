@@ -1,6 +1,5 @@
 package su.th2empty.kutts.view.fragments
 
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -11,13 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import su.th2empty.kutts.KuttsApplication
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.FragmentHomeBinding
 import su.th2empty.kutts.model.Location
 import su.th2empty.kutts.view.adapters.ContactsRecyclerViewAdapter
-import su.th2empty.kutts.view.adapters.RecyclerViewItemListener
 import su.th2empty.kutts.view.adapters.LocationsRecyclerViewAdapter
+import su.th2empty.kutts.view.adapters.RecyclerViewItemListener
 import su.th2empty.kutts.viewmodel.HomeViewModel
 import timber.log.Timber
 
@@ -53,19 +51,9 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        try {
-            setupWebsiteClickListener()
-            setupContactsRecyclerView()
-            setupLocationsRecyclerView()
-        } catch (ex: Exception) {
-            AlertDialog.Builder(KuttsApplication.instance).apply {
-                setTitle("Ебал того рот")
-                setMessage(ex.message)
-                setPositiveButton("У сука") { wtf, _ ->
-                    wtf.dismiss()
-                }
-            }
-        }
+        setupWebsiteClickListener()
+        setupContactsRecyclerView()
+        setupLocationsRecyclerView()
 
         return root
     }
@@ -103,6 +91,9 @@ class HomeFragment : Fragment() {
         homeViewModel.allLocations.observe(viewLifecycleOwner) { locations ->
             val locationsRecyclerViewAdapter = LocationsRecyclerViewAdapter(locations, locationsRVListener)
             binding.locationsRecycler.adapter = locationsRecyclerViewAdapter
+
+            binding.progressBar.visibility = View.GONE
+            binding.contentLayout.visibility = View.VISIBLE
         }
     }
 

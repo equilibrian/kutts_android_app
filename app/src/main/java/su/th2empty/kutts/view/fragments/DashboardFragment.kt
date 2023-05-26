@@ -42,17 +42,11 @@ class DashboardFragment : Fragment() {
 
     private fun observeLinks() {
         viewModel.links.observe(viewLifecycleOwner) { links ->
-            if (links.isNotEmpty()) {
-                val intentMonitoring = Intent(Intent.ACTION_VIEW, links["monitoring"])
-                binding.monitoringButton.setOnClickListener {
+            val intentMonitoring = Intent(Intent.ACTION_VIEW, links["monitoring"])
+            binding.monitoringButton.setOnClickListener {
+                if (links.isNotEmpty()) {
                     startActivity(intentMonitoring)
-                }
-            } else {
-                Toast.makeText(
-                    binding.root.context,
-                    R.string.st_temporary_unavailable_error,
-                    Toast.LENGTH_LONG
-                ).show()
+                } else Toast.makeText(context, R.string.st_network_error, Toast.LENGTH_LONG).show()
             }
         }
     }

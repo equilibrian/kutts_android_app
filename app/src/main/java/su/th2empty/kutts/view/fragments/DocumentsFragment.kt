@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.FragmentDocumentsBinding
 import su.th2empty.kutts.model.PdfDocument
+import su.th2empty.kutts.utils.Util
 import su.th2empty.kutts.view.custom.LayoutButton
 import su.th2empty.kutts.viewmodel.DocumentsViewModel
 
@@ -25,11 +26,13 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun observePdfDocuments() {
+        documentsViewModel.fetchPdfDocuments()
         documentsViewModel.pdfDocuments.observe(viewLifecycleOwner) { documents ->
-            if (documents.isNotEmpty()) {
+            if (documents.isNotEmpty() && Util.isInternetAvailable(binding.root.context)) {
                 displayPdfDocuments(documents)
                 binding.nothingToShowLayout.visibility = View.GONE
-                binding.contentLayout.visibility = View.VISIBLE
+            } else {
+                binding.nothingToShowLayout.visibility = View.VISIBLE
             }
         }
     }
@@ -76,8 +79,15 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun setupView() {
-        observePdfDocuments()
-        documentsViewModel.fetchPdfDocuments()
+        if (Util.isInternetAvailable(binding.root.context)) {
+            observePdfDocuments()
+        } else {
+            binding.errorLayout.visibility = View.VISIBLE
+        }
+
+        binding.retryButton.setOnClickListener {
+            setupView()
+        }
     }
 
     override fun onCreateView(

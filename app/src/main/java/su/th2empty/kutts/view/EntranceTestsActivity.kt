@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import su.th2empty.kutts.R
 import su.th2empty.kutts.databinding.ActivityEntranceTestsBinding
 import su.th2empty.kutts.model.PdfDocument
+import su.th2empty.kutts.utils.Util
 import su.th2empty.kutts.view.custom.LayoutButton
 import su.th2empty.kutts.viewmodel.EntranceTestsViewModel
 
@@ -33,12 +34,16 @@ class EntranceTestsActivity : AppCompatActivity() {
     }
 
     private fun observePdfDocuments() {
-        viewModel.pdfDocuments.observe(this) { documents ->
-            if (documents.isNotEmpty()) {
-                displayPdfDocuments(documents)
-                binding.nothingToShowLayout.visibility = View.GONE
+        if (Util.isInternetAvailable(this)) {
+            binding.errorLayout.visibility = View.GONE
+            viewModel.fetchPdfDocuments()
+            viewModel.pdfDocuments.observe(this) { documents ->
+                if (documents.isNotEmpty()) {
+                    displayPdfDocuments(documents)
+                    binding.nothingToShowLayout.visibility = View.GONE
+                }
             }
-        }
+        } else binding.errorLayout.visibility = View.VISIBLE
     }
 
     private fun displayPdfDocuments(documents: List<PdfDocument>) {
@@ -86,7 +91,8 @@ class EntranceTestsActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener { finish() }
 
         observePdfDocuments()
-        viewModel.fetchPdfDocuments()
+
+        binding.retryButton.setOnClickListener { observePdfDocuments() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

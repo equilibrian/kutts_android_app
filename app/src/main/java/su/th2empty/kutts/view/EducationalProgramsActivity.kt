@@ -111,6 +111,8 @@ class EducationalProgramsActivity : AppCompatActivity() {
             educationalProgramsAdapter = ProgramsRecyclerViewAdapter()
             educationalProgramsAdapter.submitList(educationalPrograms)
             binding.programsRecyclerView.adapter = educationalProgramsAdapter
+            binding.progressBar.visibility = View.GONE
+
             setupFilters()
             setupSearchView()
         }
