@@ -21,21 +21,16 @@ class Util {
         fun isInternetAvailable(context: Context): Boolean {
             val connectivityManager =
                 context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
             val networkRequest = NetworkRequest.Builder()
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                 .build()
-
             val networkCallback = ConnectivityManager.NetworkCallback()
-
             connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
-
             val networkCapabilities =
                 connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
             val isInternetAvailable =
                 networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                     ?: false
-
             connectivityManager.unregisterNetworkCallback(networkCallback)
 
             return isInternetAvailable

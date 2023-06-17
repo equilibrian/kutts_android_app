@@ -39,9 +39,6 @@
             android:name=".view.EducationalProgramsActivity"
             android:exported="false" />
         <activity
-            android:name=".view.TermsOfUseActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.AboutAppActivity"
             android:exported="false" />
         <activity

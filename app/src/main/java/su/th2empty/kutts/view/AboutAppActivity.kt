@@ -1,6 +1,5 @@
 package su.th2empty.kutts.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +31,6 @@ class AboutAppActivity : AppCompatActivity() {
     private fun setupView() {
         binding = ActivityAboutAppBinding.inflate(layoutInflater)
         binding.backBtn.setOnClickListener { finish() }
-        binding.termsOfUseBtn.setOnClickListener { launchTermsOfUseActivity() }
         binding.copyInfoBtn.setOnClickListener { viewModel.copyToClipboard() }
     }
 
@@ -59,9 +57,5 @@ class AboutAppActivity : AppCompatActivity() {
                 viewModel.showCopiedMessage.value = false
             }
         }
-    }
-
-    private fun launchTermsOfUseActivity() {
-        startActivity(Intent(this, TermsOfUseActivity::class.java))
     }
 }

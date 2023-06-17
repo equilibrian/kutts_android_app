@@ -35,6 +35,4 @@ class HomeViewModel @Inject constructor(
 
     val allContacts: LiveData<List<Contact>> = contactsRepository.allContacts
     val allLocations: LiveData<List<Location>> = locationsRepository.allLocations
-
-
 }

@@ -115,17 +115,6 @@
             app:layout_constraintTop_toBottomOf="@id/device_name"
             android:visibility="gone"/>
 
-        <Button
-            android:id="@+id/terms_of_use_btn"
-            style="@style/Theme.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/st_terms_of_use"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            app:layout_constraintTop_toBottomOf="@id/sep"
-            android:visibility="gone"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

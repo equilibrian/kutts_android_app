@@ -39,7 +39,6 @@ class ImageLoader {
                     isFirstResource: Boolean
                 ): Boolean {
                     throw Exception("Failed to load image")
-                    //return false
                 }
 
                 override fun onResourceReady(

@@ -8,7 +8,7 @@
  *
  */
 
-package su.th2empty.kutts.security
+package su.th2empty.kutts.utils
 
 import java.io.InputStream
 import java.security.MessageDigest

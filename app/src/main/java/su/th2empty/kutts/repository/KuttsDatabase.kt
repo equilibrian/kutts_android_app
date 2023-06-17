@@ -21,7 +21,7 @@ import su.th2empty.kutts.model.Dormitory
 import su.th2empty.kutts.model.EducationalCategory
 import su.th2empty.kutts.model.EducationalProgram
 import su.th2empty.kutts.model.Location
-import su.th2empty.kutts.security.Security
+import su.th2empty.kutts.utils.Security
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -72,11 +72,9 @@ abstract class KuttsDatabase : RoomDatabase() {
         private var INSTANCE: KuttsDatabase? = null
 
         private fun compareDatabases(context: Context): Boolean {
-            val assetDatabaseStream = context.assets.open("database.db")
-
+            val assetDatabaseStream = context.assets.open(DATABASE_NAME)
             val deviceDatabaseFile = File(databasePath)
             val deviceDatabaseStream = FileInputStream(deviceDatabaseFile)
-
             return try {
                 val assetHash = Security.calculateMD5Hash(assetDatabaseStream)
                 val deviceHash = Security.calculateMD5Hash(deviceDatabaseStream)
